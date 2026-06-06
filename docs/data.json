@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-06T03:50:44.110Z",
+  "generated_at": "2026-06-06T04:17:14.927Z",
   "count": 1,
   "issues": [
     {
       "id": 4601769031,
       "number": 1,
       "title": "弹幕游戏sass 平台",
-      "body": "### 点子名称\n\n弹幕大空袭\n\n### 一句话描述\n\n做弹幕游戏sass化的功能，针对游戏主播，或者不会弹幕的\n\n### 当前状态\n\n其他\n\n### 上线地址\n\nhttps://game.swep.top/\n\n### 开源地址\n\n_No response_\n\n### 卡住或遗弃原因\n\n商业模式不清晰\n\n### 技术栈\n\nvue做sass 管理端，golang做后端，web游戏端使用的是Phaser来实现\n\n### 已做工作\n\n 已经完成了前端开发，还未接入官方弹幕，后端完成了一半\n\n### 接盘建议\n\n暂无\n\n### 联系方式或补充链接\n\n_No response_",
+      "body": "### [遗缺点子] 点子名称\n\n弹幕大空袭\n\n### 一句话描述\n\n做弹幕游戏sass化的功能，针对游戏主播，或者不会弹幕的\n\n### 当前状态\n\n其他\n\n### 上线地址\n\nhttps://game.swep.top/\n\n### 开源地址\n\n_No response_\n\n### 卡住或遗弃原因\n\n商业模式不清晰\n\n### 技术栈\n\nvue做sass 管理端，golang做后端，web游戏端使用的是Phaser来实现\n\n### 已做工作\n\n 已经完成了前端开发，还未接入官方弹幕，后端完成了一半\n\n### 接盘建议\n\n暂无\n\n### 联系方式或补充链接\n\n_No response_",
       "html_url": "https://github.com/ipwangxin/AbandonedIdeas/issues/1",
       "created_at": "2026-06-06T03:50:35Z",
-      "updated_at": "2026-06-06T03:50:35Z",
+      "updated_at": "2026-06-06T04:17:07Z",
       "user": {
         "login": "ipwangxin",
         "html_url": "https://github.com/ipwangxin"
