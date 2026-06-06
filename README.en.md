@@ -35,17 +35,9 @@ Not everything here is a success story. That is the point. The current state of 
 
 ## Browse Online
 
-GitHub Pages:
+GitHub Pages: [https://ipwangxin.github.io/AbandonedIdeas/](https://ipwangxin.github.io/AbandonedIdeas/)
 
-```text
-https://ipwangxin.github.io/AbandonedIdeas/
-```
-
-Traffic Alliance:
-
-```text
-https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html
-```
+Traffic Alliance: [https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html](https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html)
 
 If your product was not blocked by development but by “promotion is hard, cannot find users,” the Traffic Alliance may help. It is a lightweight mutual-support network where early-stage products exchange links and share exposure to reach their first real users.
 
@@ -62,13 +54,8 @@ You do not need to wait until a project is completely abandoned. These are all w
 
 ## How to Submit a New Idea
 
-1. Open the repository Issues page:
-
-   ```text
-   https://github.com/ipwangxin/AbandonedIdeas/issues
-   ```
-
-2. Click **New issue**.
+1. Open the repository [Issues page](https://github.com/ipwangxin/AbandonedIdeas/issues).
+2. Click [New issue](https://github.com/ipwangxin/AbandonedIdeas/issues/new/choose).
 3. Choose the **提交遗缺点子** form.
 4. Fill in:
    - Idea name
