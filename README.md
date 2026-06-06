@@ -35,9 +35,17 @@
 
 ## 在线浏览
 
-GitHub Pages 页面：[https://ipwangxin.github.io/AbandonedIdeas/](https://ipwangxin.github.io/AbandonedIdeas/)
+GitHub Pages 页面：[点击访问](https://ipwangxin.github.io/AbandonedIdeas/)
 
-流量互助联盟页面：[https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html](https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html)
+```text
+https://ipwangxin.github.io/AbandonedIdeas/
+```
+
+流量互助联盟页面：[点击访问](https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html)
+
+```text
+https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html
+```
 
 如果你的项目不是做不出来，而是卡在“推广困难，找不到用户”，可以看看流量互助联盟。它的目标是让早期产品通过互挂链接、共享曝光，找到第一批真实用户。
 
@@ -55,7 +63,17 @@ GitHub Pages 页面：[https://ipwangxin.github.io/AbandonedIdeas/](https://ipwa
 ## 如何提交一个新点子
 
 1. 打开本仓库的 [Issues 页面](https://github.com/ipwangxin/AbandonedIdeas/issues)。
+
+   ```text
+   https://github.com/ipwangxin/AbandonedIdeas/issues
+   ```
+
 2. 点击 [New issue](https://github.com/ipwangxin/AbandonedIdeas/issues/new/choose)。
+
+   ```text
+   https://github.com/ipwangxin/AbandonedIdeas/issues/new/choose
+   ```
+
 3. 选择 **提交遗缺点子** 表单。
 4. 按提示填写：
    - 点子名称
