@@ -1,0 +1,95 @@
+name: 提交遗缺点子
+description: 把你暂时放弃的项目、产品或点子留给后来的人。
+title: "[遗缺点子] "
+labels:
+  - abandoned
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你把这个点子留下来。请尽量写清楚现状、卡点和可接手空间，方便后来者判断是否适合接盘。
+
+  - type: input
+    id: idea_name
+    attributes:
+      label: 点子名称
+      description: 项目、产品或点子的名字。
+      placeholder: 例如：独立开发者周报聚合器
+    validations:
+      required: true
+
+  - type: textarea
+    id: one_liner
+    attributes:
+      label: 一句话描述
+      description: 用一句话说清楚它解决什么问题。
+      placeholder: 例如：自动收集独立开发者的周报，按主题生成可订阅摘要。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: abandon_reason
+    attributes:
+      label: 遗弃原因
+      description: 选择最主要的放弃原因。
+      options:
+        - 推广困难，找不到用户
+        - 时间不够，优先级下降
+        - 技术实现难度过高
+        - 商业模式不清晰
+        - 竞品太强或市场变化
+        - 团队或合作者缺失
+        - 已被其他方案替代
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: tech_stack
+    attributes:
+      label: 技术栈
+      description: 已使用或计划使用的技术。
+      placeholder: 例如：Next.js、Supabase、GitHub Actions
+    validations:
+      required: false
+
+  - type: textarea
+    id: done_work
+    attributes:
+      label: 已做工作
+      description: 你已经完成了什么？代码、设计稿、调研、用户访谈都可以写。
+      placeholder: |
+        - 已完成 MVP 原型
+        - 有 3 个访谈记录
+        - 代码仓库：https://github.com/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: handoff_notes
+    attributes:
+      label: 接盘建议
+      description: 如果有人想继续做，你建议他从哪里开始？
+      placeholder: 例如：先验证 10 个目标用户是否愿意订阅，再补自动化抓取。
+    validations:
+      required: false
+
+  - type: textarea
+    id: contact
+    attributes:
+      label: 联系方式或项目链接
+      description: 可选。留下 GitHub、邮箱、项目地址、Demo 地址等。
+      placeholder: 例如：https://github.com/yourname/project
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## 📢 特别提示
+
+        如果你是因为 **“推广困难，找不到用户”** 而放弃，我们的 **【流量互助联盟】** 专门帮你解决这个问题。
+
+        👉 [点击这里立即加入流量互助联盟](https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html)
+
+        你也可以先提交这个遗缺点子，再回到首页查看其他开发者的项目和原因。

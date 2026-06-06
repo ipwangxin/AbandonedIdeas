@@ -1,0 +1,79 @@
+name: Sync abandoned issues
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+      - unlabeled
+      - reopened
+      - closed
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch abandoned issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const path = require("path");
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const label = "abandoned";
+
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: "open",
+              labels: label,
+              per_page: 100
+            });
+
+            const data = issues
+              .filter((issue) => !issue.pull_request)
+              .map((issue) => ({
+                id: issue.id,
+                number: issue.number,
+                title: issue.title,
+                body: issue.body || "",
+                html_url: issue.html_url,
+                created_at: issue.created_at,
+                updated_at: issue.updated_at,
+                user: {
+                  login: issue.user?.login || "unknown",
+                  html_url: issue.user?.html_url || ""
+                },
+                labels: issue.labels.map((item) => typeof item === "string" ? item : item.name)
+              }))
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            fs.mkdirSync("docs", { recursive: true });
+            fs.writeFileSync(
+              path.join("docs", "data.json"),
+              JSON.stringify({
+                generated_at: new Date().toISOString(),
+                count: data.length,
+                issues: data
+              }, null, 2)
+            );
+
+      - name: Commit data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: sync abandoned issues data"
+          file_pattern: docs/data.json

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>遗缺点子回收站</title>
+  <meta name="description" content="收集被遗弃的产品点子，让后来者找到可接盘的机会。">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f8fa;
+      --panel: #ffffff;
+      --text: #24292f;
+      --muted: #57606a;
+      --line: #d8dee4;
+      --accent: #0969da;
+      --accent-strong: #0550ae;
+      --warn-bg: #fff8c5;
+      --warn-line: #eac54f;
+      --tag: #ddf4ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand strong { font-size: 18px; }
+    .brand span { color: var(--muted); font-size: 13px; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid rgba(27, 31, 36, .15);
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: var(--accent-strong);
+      text-decoration: none;
+    }
+
+    main { padding: 24px 0 40px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: end;
+      padding: 8px 0 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    section, aside {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .meta { color: var(--muted); font-size: 13px; }
+
+    .notice {
+      display: none;
+      margin: 0 0 16px;
+      padding: 14px;
+      border: 1px solid var(--warn-line);
+      border-radius: 6px;
+      background: var(--warn-bg);
+    }
+
+    .notice strong { display: block; margin-bottom: 4px; }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    input[type="search"] {
+      width: 100%;
+      min-height: 34px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    .id { width: 74px; }
+    .reason { width: 210px; }
+    .author { width: 150px; }
+    .date { width: 116px; }
+
+    .empty {
+      padding: 28px 14px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .side-block { padding: 14px; border-bottom: 1px solid var(--line); }
+    .side-block:last-child { border-bottom: 0; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 5px 9px;
+      border: 1px solid #b6e3ff;
+      border-radius: 999px;
+      background: var(--tag);
+      color: #0969da;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .tag.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .case {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .case li { margin: 8px 0; }
+
+    footer {
+      padding: 24px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 820px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .nav { align-items: flex-start; }
+      .table-scroll { overflow-x: auto; }
+      table { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <strong>遗缺点子回收站</strong>
+        <span>Abandoned ideas, reusable lessons.</span>
+      </div>
+      <a class="button" id="submitTop" href="#">提交遗缺点子</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div>
+        <h1>把放弃的项目，变成后来者的起点。</h1>
+        <p class="lead">这里收集独立开发者搁置、失败或暂时放弃的点子。失败原因也有价值，尤其是那些被推广卡住的产品。</p>
+      </div>
+      <a class="button" id="submitHero" href="#">发布一个遗缺点子</a>
+    </div>
+
+    <div class="notice" id="trafficNotice">
+      <strong>你刚刚关注了“推广困难”相关问题。</strong>
+      流量互助联盟可以帮早期产品互相挂链接、共享第一批访问者。
+      <a href="lianmeng.html">了解流量互助联盟</a>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="section-head">
+          <h2>遗缺点子列表</h2>
+          <span class="meta" id="countText">加载中</span>
+        </div>
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="搜索点子、原因、作者">
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="id">ID</th>
+                <th>点子名称</th>
+                <th class="reason">遗弃原因</th>
+                <th class="author">作者</th>
+                <th class="date">日期</th>
+              </tr>
+            </thead>
+            <tbody id="ideaRows"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="emptyState" hidden>还没有匹配的遗缺点子。先提交第一个吧。</div>
+      </section>
+
+      <aside>
+        <div class="side-block">
+          <h2>热门原因标签云</h2>
+          <div class="tags" id="reasonTags"></div>
+        </div>
+        <div class="side-block">
+          <h2>成功案例</h2>
+          <ol class="case">
+            <li><a href="https://github.com" target="_blank" rel="noreferrer">一个被搁置的自动化脚本，被后来者改成开源 CLI。</a></li>
+            <li><a href="lianmeng.html">推广失败的小工具，通过互助链接找到第一批用户。</a></li>
+          </ol>
+        </div>
+        <div class="side-block">
+          <h2>推广卡住了？</h2>
+          <p class="meta">如果你的项目不是做不出来，而是没人看见，先看看流量互助联盟。</p>
+          <p><a class="button" href="lianmeng.html">加入流量联盟</a></p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">Powered by GitHub Issues, GitHub Pages and GitHub Actions.</div>
+  </footer>
+
+  <script>
+    const CONFIG = {
+      owner: "ipwangxin",
+      repo: "AbandonedIdeas",
+      issueTemplate: "abandon_idea.yml",
+      abandonedLabel: "abandoned"
+    };
+
+    const state = {
+      issues: [],
+      filterReason: "",
+      keyword: ""
+    };
+
+    const rows = document.querySelector("#ideaRows");
+    const tags = document.querySelector("#reasonTags");
+    const countText = document.querySelector("#countText");
+    const emptyState = document.querySelector("#emptyState");
+    const searchInput = document.querySelector("#searchInput");
+
+    function repoReady() {
+      return !CONFIG.owner.startsWith("YOUR_") && !CONFIG.repo.startsWith("YOUR_");
+    }
+
+    function newIssueUrl() {
+      if (!repoReady()) return "https://github.com/new";
+      const url = new URL(`https://github.com/${CONFIG.owner}/${CONFIG.repo}/issues/new`);
+      url.searchParams.set("template", CONFIG.issueTemplate);
+      return url.toString();
+    }
+
+    function wireSubmitLinks() {
+      const url = newIssueUrl();
+      document.querySelectorAll("#submitTop, #submitHero").forEach((link) => {
+        link.href = url;
+        link.addEventListener("click", () => {
+          localStorage.setItem("abandonIdeaSubmitIntent", JSON.stringify({
+            at: Date.now(),
+            reasonHint: "推广困难，找不到用户"
+          }));
+        });
+      });
+    }
+
+    function maybeShowTrafficNotice() {
+      const params = new URLSearchParams(location.search);
+      const reason = params.get("reason") || "";
+      const raw = localStorage.getItem("abandonIdeaSubmitIntent");
+      const recentlySubmitted = raw ? Date.now() - JSON.parse(raw).at < 1000 * 60 * 60 * 24 : false;
+      if (reason.includes("推广困难") || recentlySubmitted) {
+        document.querySelector("#trafficNotice").style.display = "block";
+      }
+    }
+
+    function extractField(body, label) {
+      if (!body) return "";
+      const patterns = [
+        new RegExp(`### ${label}\\s+([\\s\\S]*?)(?=\\n### |$)`, "i"),
+        new RegExp(`${label}\\s*[:：]\\s*([^\\n]+)`, "i")
+      ];
+      for (const pattern of patterns) {
+        const match = body.match(pattern);
+        if (match) return match[1].trim().replace(/^_No response_$/i, "");
+      }
+      return "";
+    }
+
+    function normalizeIssue(issue) {
+      const body = issue.body || "";
+      return {
+        id: issue.number || issue.id,
+        title: extractField(body, "点子名称") || issue.title.replace(/^\[遗缺点子\]\s*/, ""),
+        reason: extractField(body, "遗弃原因") || "未填写",
+        author: issue.user?.login || issue.author || "unknown",
+        date: issue.created_at || issue.date || "",
+        url: issue.html_url || issue.url || "#"
+      };
+    }
+
+    async function loadIssues() {
+      try {
+        const data = await fetch("data.json", { cache: "no-store" }).then((res) => {
+          if (!res.ok) throw new Error("data.json not found");
+          return res.json();
+        });
+        return Array.isArray(data) ? data.map(normalizeIssue) : data.issues.map(normalizeIssue);
+      } catch (error) {
+        if (!repoReady()) return [];
+        const api = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/issues?state=open&labels=${encodeURIComponent(CONFIG.abandonedLabel)}&per_page=100`;
+        const data = await fetch(api).then((res) => res.json());
+        return Array.isArray(data) ? data.map(normalizeIssue) : [];
+      }
+    }
+
+    function filteredIssues() {
+      const keyword = state.keyword.toLowerCase();
+      return state.issues.filter((issue) => {
+        const matchReason = !state.filterReason || issue.reason === state.filterReason;
+        const haystack = `${issue.title} ${issue.reason} ${issue.author}`.toLowerCase();
+        return matchReason && (!keyword || haystack.includes(keyword));
+      });
+    }
+
+    function renderTags() {
+      const counts = new Map();
+      state.issues.forEach((issue) => counts.set(issue.reason, (counts.get(issue.reason) || 0) + 1));
+      const items = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+      tags.innerHTML = "";
+
+      const all = document.createElement("button");
+      all.className = `tag ${state.filterReason ? "" : "active"}`;
+      all.textContent = `全部 ${state.issues.length}`;
+      all.onclick = () => { state.filterReason = ""; render(); };
+      tags.append(all);
+
+      items.forEach(([reason, count]) => {
+        const tag = document.createElement("button");
+        tag.className = `tag ${state.filterReason === reason ? "active" : ""}`;
+        tag.textContent = `${reason} ${count}`;
+        tag.onclick = () => { state.filterReason = reason; render(); };
+        tags.append(tag);
+      });
+    }
+
+    function renderRows() {
+      const issues = filteredIssues();
+      rows.innerHTML = "";
+      emptyState.hidden = issues.length > 0;
+      countText.textContent = `${issues.length} / ${state.issues.length} 个点子`;
+
+      issues.forEach((issue) => {
+        const tr = document.createElement("tr");
+        const date = issue.date ? new Date(issue.date).toLocaleDateString("zh-CN") : "-";
+        tr.innerHTML = `
+          <td class="id"><a href="${issue.url}" target="_blank" rel="noreferrer">#${issue.id}</a></td>
+          <td><a href="${issue.url}" target="_blank" rel="noreferrer">${escapeHtml(issue.title)}</a></td>
+          <td class="reason">${escapeHtml(issue.reason)}</td>
+          <td class="author">${escapeHtml(issue.author)}</td>
+          <td class="date">${date}</td>
+        `;
+        rows.append(tr);
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    function render() {
+      renderTags();
+      renderRows();
+    }
+
+    searchInput.addEventListener("input", (event) => {
+      state.keyword = event.target.value;
+      render();
+    });
+
+    wireSubmitLinks();
+    maybeShowTrafficNotice();
+    loadIssues()
+      .then((issues) => { state.issues = issues; render(); })
+      .catch(() => {
+        countText.textContent = "加载失败";
+        emptyState.hidden = false;
+        emptyState.textContent = "数据加载失败，请检查 data.json 或仓库配置。";
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>流量互助联盟 - 遗缺点子回收站</title>
+  <meta name="description" content="帮早期产品找到第一批用户的独立开发者互助联盟。">
+  <style>
+    :root {
+      --bg: #f6f8fa;
+      --panel: #ffffff;
+      --text: #24292f;
+      --muted: #57606a;
+      --line: #d8dee4;
+      --accent: #0969da;
+      --accent-strong: #0550ae;
+      --good-bg: #dafbe1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .brand { font-weight: 700; font-size: 18px; color: var(--text); }
+
+    main { padding: 28px 0 44px; }
+
+    .hero {
+      padding: 18px 0 26px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0 0 12px;
+      font-size: clamp(30px, 6vw, 46px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .stats {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 8px 12px;
+      border: 1px solid #8cdd9b;
+      border-radius: 6px;
+      background: var(--good-bg);
+      font-weight: 600;
+    }
+
+    section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .step, .faq, .apply {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      padding: 14px;
+    }
+
+    .step strong { display: block; margin-bottom: 6px; }
+    .muted { color: var(--muted); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid rgba(27, 31, 36, .15);
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      background: var(--accent-strong);
+      text-decoration: none;
+    }
+
+    .faq { margin: 10px 0; }
+    .faq p { margin: 6px 0 0; color: var(--muted); }
+
+    iframe {
+      width: 100%;
+      min-height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+
+    footer {
+      padding: 24px 0;
+      color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+      nav { align-items: flex-start; }
+      .steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="wrap">
+      <a class="brand" href="index.html">遗缺点子回收站</a>
+      <a href="index.html">返回点子列表</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <h1>帮你的产品找到第一批用户。</h1>
+      <p class="lead">流量互助联盟适合已经做出 MVP、但卡在曝光和冷启动的独立开发者。我们用最朴素的方式互相导流：真实产品、真实链接、真实访问。</p>
+      <div class="stats">已有 0 位开发者加入</div>
+    </div>
+
+    <section>
+      <h2>运作原理</h2>
+      <div class="steps">
+        <div class="step">
+          <strong>1. 提交产品</strong>
+          <span class="muted">留下产品名、网址和一句话介绍，人工审核是否适合互助。</span>
+        </div>
+        <div class="step">
+          <strong>2. 互挂链接</strong>
+          <span class="muted">成员在产品页、资源页或页脚放置轻量推荐链接。</span>
+        </div>
+        <div class="step">
+          <strong>3. 共享流量池</strong>
+          <span class="muted">每个产品贡献一点曝光，整个联盟获得更多早期用户触达。</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>申请入口</h2>
+      <div class="apply">
+        <p class="muted">推荐用 GitHub Issue 收集申请，避免额外后端。把下面链接替换成你的联盟申请 Issue 模板或 Google Form。</p>
+        <p>
+          <a class="button" href="https://github.com/ipwangxin/AbandonedIdeas/issues/new?title=%5B%E6%B5%81%E9%87%8F%E8%81%94%E7%9B%9F%E7%94%B3%E8%AF%B7%5D%20" target="_blank" rel="noreferrer">提交联盟申请</a>
+        </p>
+        <p class="muted">如需嵌入 Google Form，把下面 iframe 的 src 替换为你的表单嵌入地址。</p>
+        <iframe title="流量联盟申请表单" src="about:blank"></iframe>
+      </div>
+    </section>
+
+    <section>
+      <h2>FAQ</h2>
+      <div class="faq">
+        <strong>会不会影响我自己的流量？</strong>
+        <p>链接应该放在不打断核心转化的位置，例如资源页、感谢页、页脚或推荐区。目标是增加互惠曝光，而不是抢走主流程。</p>
+      </div>
+      <div class="faq">
+        <strong>怎么保证公平？</strong>
+        <p>先用人工维护的成员列表起步，记录每个成员是否已挂链接、是否仍可访问。等有足够成员后，再引入点击统计和贡献权重。</p>
+      </div>
+      <div class="faq">
+        <strong>什么产品适合加入？</strong>
+        <p>已经有可访问页面、目标用户明确、不会误导用户的早期产品最适合。纯想法阶段可以先提交到遗缺点子回收站。</p>
+      </div>
+      <div class="faq">
+        <strong>如果我的产品已经关闭了呢？</strong>
+        <p>可以先提交遗弃报告。如果主要原因是推广困难，你仍然可以申请联盟，尝试给项目一次小规模重启机会。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">先用人工运营跑通前 10 个成员，再考虑自动化。</footer>
+</body>
+</html>
