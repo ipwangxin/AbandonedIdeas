@@ -29,30 +29,23 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: project_status
-    attributes:
-      label: 当前状态
-      description: 这个项目现在处于什么阶段？
-      options:
-        - 已上线，但增长或推广遇到困难
-        - 已上线，但暂时停止维护
-        - 未上线，只有原型或 Demo
-        - 未上线，只有想法或需求文档
-        - 已开源，等待更多贡献者或接盘者
-        - 已放弃，不计划继续
-        - 其他
-    validations:
-      required: true
-
   - type: input
-    id: live_url
+    id: visit_url
     attributes:
-      label: 上线地址
-      description: 可选。如果项目已经上线，请填写产品、Demo、落地页或文档地址。
+      label: 访问地址
+      description: 可选。填写产品、Demo、落地页、文档、预览图或其他可访问地址。未上线也可以留空。
       placeholder: 例如：https://example.com
     validations:
       required: false
+
+  - type: checkboxes
+    id: launch_status
+    attributes:
+      label: 是否上线
+      description: 默认视为未上线。如果项目已经公开可访问，请勾选。
+      options:
+        - label: 已上线
+          required: false
 
   - type: input
     id: source_url
@@ -81,6 +74,15 @@ body:
       required: true
 
   - type: input
+    id: other_reason
+    attributes:
+      label: 其他原因说明
+      description: 如果上面选择“其他”，请在这里补充具体原因。
+      placeholder: 例如：法律风险、数据源不稳定、目标用户太分散
+    validations:
+      required: false
+
+  - type: input
     id: tech_stack
     attributes:
       label: 技术栈
@@ -107,15 +109,6 @@ body:
       label: 接盘建议
       description: 如果有人想继续做，你建议他从哪里开始？
       placeholder: 例如：先验证 10 个目标用户是否愿意订阅，再补自动化抓取。
-    validations:
-      required: false
-
-  - type: textarea
-    id: contact
-    attributes:
-      label: 联系方式或补充链接
-      description: 可选。留下 GitHub、邮箱、社交账号、讨论帖、文章复盘等。
-      placeholder: 例如：https://github.com/yourname
     validations:
       required: false
 

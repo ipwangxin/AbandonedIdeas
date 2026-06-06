@@ -28,7 +28,7 @@ Every developer has projects that did not continue: launched products with no gr
 - Short descriptions of what each idea was about
 - The main blocker the author is facing
 - Work that had already been done
-- Tech stacks, live URLs, open-source URLs, and handoff notes
+- Tech stacks, visit URLs, open-source URLs, and handoff notes
 - Real problems other developers encountered
 
 Not everything here is a success story. That is the point. The current state of a project is useful raw material. It can help others avoid repeated mistakes, rethink a market, or revive an idea in a new form.
@@ -78,14 +78,14 @@ You do not need to wait until a project is completely abandoned. These are all w
 4. Fill in:
    - Idea name
    - One-line description
-   - Current status
-   - Live URL, optional
+   - Visit URL, optional
+   - Launch status, unchecked means not launched
    - Open-source URL, optional
    - Blocker or reason for abandonment
+   - Other reason details, optional
    - Tech stack
    - Work already done
    - Handoff notes
-   - Contact or project links
 5. After submission, the Issue will be labeled `abandoned`.
 6. GitHub Actions will sync the data and display it on the homepage.
 
@@ -95,9 +95,9 @@ To make your idea easier to understand or take over:
 
 - Do not only write “no time”; explain what had already been done
 - Do not only write “failed promotion”; mention which channels you tried
-- If the project is live, add the product, demo, landing page, or documentation URL
+- If the project is live, add the product, demo, landing page, or documentation visit URL
 - If the project is open-source, add the GitHub, GitLab, Gitee, or other repository URL
-- If you welcome others to continue the work, clarify permission and contact details
+- If you welcome others to continue the work, clarify permission and handoff boundaries
 - If the idea should not be continued, explain why so others can avoid the same trap
 
 ## How It Works

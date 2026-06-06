@@ -184,12 +184,26 @@
     }
 
     tr:last-child td { border-bottom: 0; }
-    .id { width: 68px; }
-    .status { width: 150px; }
+    .id { width: 70px; }
+    .title-col { width: 300px; }
+    .status { width: 90px; }
     .reason { width: 190px; }
     .links { width: 150px; }
     .author { width: 130px; }
     .date { width: 110px; }
+
+    .issue-ref {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .title-text {
+      display: block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
     .link-list {
       display: flex;
@@ -258,7 +272,7 @@
       .hero, .grid { grid-template-columns: 1fr; }
       .nav { align-items: flex-start; }
       .table-scroll { overflow-x: auto; }
-      table { min-width: 980px; }
+      table { min-width: 1040px; }
     }
   </style>
 </head>
@@ -295,17 +309,17 @@
           <span class="meta" id="countText">加载中</span>
         </div>
         <div class="toolbar">
-          <input id="searchInput" type="search" placeholder="搜索点子、原因、作者">
+          <input id="searchInput" type="search" placeholder="搜索点子、原因、作者、访问地址">
         </div>
         <div class="table-scroll">
           <table>
             <thead>
               <tr>
                 <th class="id">ID</th>
-                <th>点子名称</th>
-                <th class="status">当前状态</th>
+                <th class="title-col">点子名称</th>
+                <th class="status">上线状态</th>
                 <th class="reason">卡住原因</th>
-                <th class="links">项目链接</th>
+                <th class="links">外部链接</th>
                 <th class="author">作者</th>
                 <th class="date">日期</th>
               </tr>
@@ -413,14 +427,27 @@
       return {
         id: issue.number || issue.id,
         title: extractField(body, "点子名称") || issue.title.replace(/^\[遗缺点子\]\s*/, ""),
-        status: extractField(body, "当前状态") || "未填写",
-        reason: extractField(body, "卡住或遗弃原因") || extractField(body, "遗弃原因") || "未填写",
-        liveUrl: extractField(body, "上线地址"),
+        status: launchStatus(body),
+        reason: displayReason(body),
+        liveUrl: extractField(body, "访问地址") || extractField(body, "上线地址"),
         sourceUrl: extractField(body, "开源地址"),
         author: issue.user?.login || issue.author || "unknown",
-        date: issue.created_at || issue.date || "",
-        url: issue.html_url || issue.url || "#"
+        date: issue.created_at || issue.date || ""
       };
+    }
+
+    function launchStatus(body) {
+      const value = extractField(body, "是否上线");
+      const legacyStatus = extractField(body, "当前状态");
+      const checked = value.includes("[x]") || value.includes("已上线") && !value.includes("[ ]");
+      return checked || legacyStatus.includes("已上线") ? "已上线" : "未上线";
+    }
+
+    function displayReason(body) {
+      const reason = extractField(body, "卡住或遗弃原因") || extractField(body, "遗弃原因") || "未填写";
+      const other = extractField(body, "其他原因说明");
+      if (reason === "其他" && other) return `其他：${other}`;
+      return reason;
     }
 
     async function loadIssues() {
@@ -478,12 +505,12 @@
         const tr = document.createElement("tr");
         const date = issue.date ? new Date(issue.date).toLocaleDateString("zh-CN") : "-";
         const links = [
-          externalLink(issue.liveUrl, "上线"),
+          externalLink(issue.liveUrl, "访问"),
           externalLink(issue.sourceUrl, "开源")
         ].filter(Boolean).join("");
         tr.innerHTML = `
-          <td class="id"><a href="${issue.url}" target="_blank" rel="noreferrer">#${issue.id}</a></td>
-          <td><a href="${issue.url}" target="_blank" rel="noreferrer">${escapeHtml(issue.title)}</a></td>
+          <td class="id"><span class="issue-ref" title="GitHub Issue #${issue.id}">#${issue.id}</span></td>
+          <td class="title-col"><span class="title-text" title="${escapeHtml(issue.title)}">${escapeHtml(issue.title)}</span></td>
           <td class="status">${escapeHtml(issue.status)}</td>
           <td class="reason">${escapeHtml(issue.reason)}</td>
           <td class="links"><div class="link-list">${links || "-"}</div></td>
