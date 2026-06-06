@@ -189,7 +189,7 @@
     .status { width: 90px; }
     .reason { width: 190px; }
     .links { width: 150px; }
-    .author { width: 130px; }
+    .author { width: 180px; }
     .date { width: 110px; }
 
     .issue-ref {
@@ -197,7 +197,8 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .title-text {
+    .title-text,
+    .author-text {
       display: block;
       max-width: 100%;
       overflow: hidden;
@@ -514,7 +515,7 @@
           <td class="status">${escapeHtml(issue.status)}</td>
           <td class="reason">${escapeHtml(issue.reason)}</td>
           <td class="links"><div class="link-list">${links || "-"}</div></td>
-          <td class="author">${escapeHtml(issue.author)}</td>
+          <td class="author"><span class="author-text" title="${escapeHtml(issue.author)}">${escapeHtml(issue.author)}</span></td>
           <td class="date">${date}</td>
         `;
         rows.append(tr);
