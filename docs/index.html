@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>遗缺点子回收站</title>
-  <meta name="description" content="收集被遗弃的产品点子，让后来者找到可接盘的机会。">
+  <meta name="description" content="收集被暂停、被遗弃、上线后增长卡住的产品点子，让后来者找到可借鉴和可接盘的机会。">
   <style>
     :root {
       color-scheme: light;
@@ -33,7 +33,7 @@
     a:hover { text-decoration: underline; }
 
     .wrap {
-      width: min(1080px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
 
@@ -184,10 +184,30 @@
     }
 
     tr:last-child td { border-bottom: 0; }
-    .id { width: 74px; }
-    .reason { width: 210px; }
-    .author { width: 150px; }
-    .date { width: 116px; }
+    .id { width: 68px; }
+    .status { width: 150px; }
+    .reason { width: 190px; }
+    .links { width: 150px; }
+    .author { width: 130px; }
+    .date { width: 110px; }
+
+    .link-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mini-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #f6f8fa;
+      font-size: 12px;
+      white-space: nowrap;
+    }
 
     .empty {
       padding: 28px 14px;
@@ -238,7 +258,7 @@
       .hero, .grid { grid-template-columns: 1fr; }
       .nav { align-items: flex-start; }
       .table-scroll { overflow-x: auto; }
-      table { min-width: 760px; }
+      table { min-width: 980px; }
     }
   </style>
 </head>
@@ -256,8 +276,8 @@
   <main class="wrap">
     <div class="hero">
       <div>
-        <h1>把放弃的项目，变成后来者的起点。</h1>
-        <p class="lead">这里收集独立开发者搁置、失败或暂时放弃的点子。失败原因也有价值，尤其是那些被推广卡住的产品。</p>
+        <h1>把卡住的项目，变成后来者的起点。</h1>
+        <p class="lead">这里收集独立开发者已经上线、暂时搁置、失败或等待接盘的点子。真实现状也有价值，尤其是那些被推广卡住的产品。</p>
       </div>
       <a class="button" id="submitHero" href="#">发布一个遗缺点子</a>
     </div>
@@ -283,7 +303,9 @@
               <tr>
                 <th class="id">ID</th>
                 <th>点子名称</th>
-                <th class="reason">遗弃原因</th>
+                <th class="status">当前状态</th>
+                <th class="reason">卡住原因</th>
+                <th class="links">项目链接</th>
                 <th class="author">作者</th>
                 <th class="date">日期</th>
               </tr>
@@ -391,7 +413,10 @@
       return {
         id: issue.number || issue.id,
         title: extractField(body, "点子名称") || issue.title.replace(/^\[遗缺点子\]\s*/, ""),
-        reason: extractField(body, "遗弃原因") || "未填写",
+        status: extractField(body, "当前状态") || "未填写",
+        reason: extractField(body, "卡住或遗弃原因") || extractField(body, "遗弃原因") || "未填写",
+        liveUrl: extractField(body, "上线地址"),
+        sourceUrl: extractField(body, "开源地址"),
         author: issue.user?.login || issue.author || "unknown",
         date: issue.created_at || issue.date || "",
         url: issue.html_url || issue.url || "#"
@@ -417,7 +442,7 @@
       const keyword = state.keyword.toLowerCase();
       return state.issues.filter((issue) => {
         const matchReason = !state.filterReason || issue.reason === state.filterReason;
-        const haystack = `${issue.title} ${issue.reason} ${issue.author}`.toLowerCase();
+        const haystack = `${issue.title} ${issue.status} ${issue.reason} ${issue.liveUrl} ${issue.sourceUrl} ${issue.author}`.toLowerCase();
         return matchReason && (!keyword || haystack.includes(keyword));
       });
     }
@@ -452,15 +477,35 @@
       issues.forEach((issue) => {
         const tr = document.createElement("tr");
         const date = issue.date ? new Date(issue.date).toLocaleDateString("zh-CN") : "-";
+        const links = [
+          externalLink(issue.liveUrl, "上线"),
+          externalLink(issue.sourceUrl, "开源")
+        ].filter(Boolean).join("");
         tr.innerHTML = `
           <td class="id"><a href="${issue.url}" target="_blank" rel="noreferrer">#${issue.id}</a></td>
           <td><a href="${issue.url}" target="_blank" rel="noreferrer">${escapeHtml(issue.title)}</a></td>
+          <td class="status">${escapeHtml(issue.status)}</td>
           <td class="reason">${escapeHtml(issue.reason)}</td>
+          <td class="links"><div class="link-list">${links || "-"}</div></td>
           <td class="author">${escapeHtml(issue.author)}</td>
           <td class="date">${date}</td>
         `;
         rows.append(tr);
       });
+    }
+
+    function externalLink(value, label) {
+      const url = normalizeUrl(value);
+      if (!url) return "";
+      return `<a class="mini-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${label}</a>`;
+    }
+
+    function normalizeUrl(value) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      if (/^https?:\/\//i.test(text)) return text;
+      if (/^www\./i.test(text)) return `https://${text}`;
+      return "";
     }
 
     function escapeHtml(value) {

@@ -1,5 +1,5 @@
 name: 提交遗缺点子
-description: 把你暂时放弃的项目、产品或点子留给后来的人。
+description: 把你上线、暂停、放弃或等待接盘的项目、产品或点子留给后来的人。
 title: "[遗缺点子] "
 labels:
   - abandoned
@@ -7,7 +7,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        感谢你把这个点子留下来。请尽量写清楚现状、卡点和可接手空间，方便后来者判断是否适合接盘。
+        感谢你把这个点子留下来。它可以是已上线但增长停滞的产品，也可以是未上线、暂停维护、开源等待接盘或已经放弃的想法。
+
+        请尽量写清楚现状、卡点和可接手空间，方便后来者判断是否适合借鉴、复盘或接盘。
 
   - type: input
     id: idea_name
@@ -28,10 +30,44 @@ body:
       required: true
 
   - type: dropdown
+    id: project_status
+    attributes:
+      label: 当前状态
+      description: 这个项目现在处于什么阶段？
+      options:
+        - 已上线，但增长或推广遇到困难
+        - 已上线，但暂时停止维护
+        - 未上线，只有原型或 Demo
+        - 未上线，只有想法或需求文档
+        - 已开源，等待更多贡献者或接盘者
+        - 已放弃，不计划继续
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: live_url
+    attributes:
+      label: 上线地址
+      description: 可选。如果项目已经上线，请填写产品、Demo、落地页或文档地址。
+      placeholder: 例如：https://example.com
+    validations:
+      required: false
+
+  - type: input
+    id: source_url
+    attributes:
+      label: 开源地址
+      description: 可选。如果项目已开源，请填写 GitHub、GitLab、Gitee 等代码仓库地址。
+      placeholder: 例如：https://github.com/yourname/project
+    validations:
+      required: false
+
+  - type: dropdown
     id: abandon_reason
     attributes:
-      label: 遗弃原因
-      description: 选择最主要的放弃原因。
+      label: 卡住或遗弃原因
+      description: 选择最主要的卡点。即使项目已经上线，也可以选择它目前最痛的地方。
       options:
         - 推广困难，找不到用户
         - 时间不够，优先级下降
@@ -77,9 +113,9 @@ body:
   - type: textarea
     id: contact
     attributes:
-      label: 联系方式或项目链接
-      description: 可选。留下 GitHub、邮箱、项目地址、Demo 地址等。
-      placeholder: 例如：https://github.com/yourname/project
+      label: 联系方式或补充链接
+      description: 可选。留下 GitHub、邮箱、社交账号、讨论帖、文章复盘等。
+      placeholder: 例如：https://github.com/yourname
     validations:
       required: false
 
