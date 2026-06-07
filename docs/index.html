@@ -230,6 +230,57 @@
       text-align: center;
     }
 
+    .card-list {
+      display: none;
+      padding: 12px;
+      gap: 10px;
+    }
+
+    .idea-card {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .idea-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .idea-card-title {
+      min-width: 0;
+      font-weight: 700;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .idea-card-id {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .idea-card-grid {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 6px 10px;
+      font-size: 13px;
+    }
+
+    .idea-card-label {
+      color: var(--muted);
+    }
+
+    .idea-card-value {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
     .side-block { padding: 14px; border-bottom: 1px solid var(--line); }
     .side-block:last-child { border-bottom: 0; }
 
@@ -274,6 +325,38 @@
       .nav { align-items: flex-start; }
       .table-scroll { overflow-x: auto; }
       table { min-width: 994px; }
+    }
+
+    @media (max-width: 700px) {
+      .wrap {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .nav {
+        flex-direction: column;
+      }
+
+      .nav .button,
+      .hero .button {
+        width: 100%;
+      }
+
+      .hero {
+        gap: 14px;
+      }
+
+      .table-scroll {
+        display: none;
+      }
+
+      .card-list {
+        display: grid;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -328,6 +411,7 @@
             <tbody id="ideaRows"></tbody>
           </table>
         </div>
+        <div class="card-list" id="ideaCards"></div>
         <div class="empty" id="emptyState" hidden>还没有匹配的遗缺点子。先提交第一个吧。</div>
       </section>
 
@@ -371,6 +455,7 @@
     };
 
     const rows = document.querySelector("#ideaRows");
+    const cards = document.querySelector("#ideaCards");
     const tags = document.querySelector("#reasonTags");
     const countText = document.querySelector("#countText");
     const emptyState = document.querySelector("#emptyState");
@@ -499,6 +584,7 @@
     function renderRows() {
       const issues = filteredIssues();
       rows.innerHTML = "";
+      cards.innerHTML = "";
       emptyState.hidden = issues.length > 0;
       countText.textContent = `${issues.length} / ${state.issues.length} 个点子`;
 
@@ -519,6 +605,28 @@
           <td class="date">${date}</td>
         `;
         rows.append(tr);
+
+        const card = document.createElement("article");
+        card.className = "idea-card";
+        card.innerHTML = `
+          <div class="idea-card-head">
+            <div class="idea-card-title">${escapeHtml(issue.title)}</div>
+            <div class="idea-card-id">#${issue.id}</div>
+          </div>
+          <div class="idea-card-grid">
+            <div class="idea-card-label">状态</div>
+            <div class="idea-card-value">${escapeHtml(issue.status)}</div>
+            <div class="idea-card-label">原因</div>
+            <div class="idea-card-value">${escapeHtml(issue.reason)}</div>
+            <div class="idea-card-label">链接</div>
+            <div class="idea-card-value"><div class="link-list">${links || "-"}</div></div>
+            <div class="idea-card-label">作者</div>
+            <div class="idea-card-value">${escapeHtml(issue.author)}</div>
+            <div class="idea-card-label">日期</div>
+            <div class="idea-card-value">${date}</div>
+          </div>
+        `;
+        cards.append(card);
       });
     }
 
