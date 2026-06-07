@@ -35,16 +35,16 @@ Not everything here is a success story. That is the point. The current state of 
 
 ## Browse Online
 
-GitHub Pages: [Open website](https://ipwangxin.github.io/AbandonedIdeas/)
+Website: [Open website](https://ideas.swep.top/)
 
 ```text
-https://ipwangxin.github.io/AbandonedIdeas/
+https://ideas.swep.top/
 ```
 
-Traffic Alliance: [Open page](https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html)
+Traffic Alliance: [Open page](https://ideas.swep.top/lianmeng.html)
 
 ```text
-https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html
+https://ideas.swep.top/lianmeng.html
 ```
 
 If your product was not blocked by development but by “promotion is hard, cannot find users,” the Traffic Alliance may help. It is a lightweight mutual-support network where early-stage products exchange links and share exposure to reach their first real users.

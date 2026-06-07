@@ -35,16 +35,16 @@
 
 ## 在线浏览
 
-GitHub Pages 页面：[点击访问](https://ipwangxin.github.io/AbandonedIdeas/)
+网站首页：[点击访问](https://ideas.swep.top/)
 
 ```text
-https://ipwangxin.github.io/AbandonedIdeas/
+https://ideas.swep.top/
 ```
 
-流量互助联盟页面：[点击访问](https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html)
+流量互助联盟页面：[点击访问](https://ideas.swep.top/lianmeng.html)
 
 ```text
-https://ipwangxin.github.io/AbandonedIdeas/lianmeng.html
+https://ideas.swep.top/lianmeng.html
 ```
 
 如果你的项目不是做不出来，而是卡在“推广困难，找不到用户”，可以看看流量互助联盟。它的目标是让早期产品通过互挂链接、共享曝光，找到第一批真实用户。
