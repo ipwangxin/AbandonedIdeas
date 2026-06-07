@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ideas.swep.top/sitemap.xml
