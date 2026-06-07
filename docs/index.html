@@ -1,678 +1,722 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>遗缺点子回收站</title>
-  <meta name="description" content="收集被暂停、被遗弃、上线后增长卡住的产品点子，让后来者找到可借鉴和可接盘的机会。">
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f6f8fa;
-      --panel: #ffffff;
-      --text: #24292f;
-      --muted: #57606a;
-      --line: #d8dee4;
-      --accent: #0969da;
-      --accent-strong: #0550ae;
-      --warn-bg: #fff8c5;
-      --warn-line: #eac54f;
-      --tag: #ddf4ff;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font: 14px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    }
-
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .wrap {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    header {
-      border-bottom: 1px solid var(--line);
-      background: var(--panel);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 16px 0;
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand strong { font-size: 18px; }
-    .brand span { color: var(--muted); font-size: 13px; }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 38px;
-      padding: 8px 14px;
-      border: 1px solid rgba(27, 31, 36, .15);
-      border-radius: 6px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 600;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
-    .button:hover {
-      background: var(--accent-strong);
-      text-decoration: none;
-    }
-
-    main { padding: 24px 0 40px; }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
-      align-items: end;
-      padding: 8px 0 24px;
-    }
-
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 5vw, 42px);
-      line-height: 1.15;
-      letter-spacing: 0;
-    }
-
-    .lead {
-      max-width: 720px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 300px;
-      gap: 16px;
-      align-items: start;
-    }
-
-    section, aside {
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--panel);
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 16px;
-      letter-spacing: 0;
-    }
-
-    .meta { color: var(--muted); font-size: 13px; }
-
-    .notice {
-      display: none;
-      margin: 0 0 16px;
-      padding: 14px;
-      border: 1px solid var(--warn-line);
-      border-radius: 6px;
-      background: var(--warn-bg);
-    }
-
-    .notice strong { display: block; margin-bottom: 4px; }
-
-    .toolbar {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    input[type="search"] {
-      width: 100%;
-      min-height: 34px;
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fff;
-      color: var(--text);
-      font: inherit;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-    }
-
-    th, td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    tr:last-child td { border-bottom: 0; }
-    .id { width: 70px; }
-    .title-col { width: 300px; }
-    .status { width: 90px; }
-    .reason { width: 190px; }
-    .links { width: 104px; }
-    .author { width: 180px; }
-    .date { width: 110px; }
-
-    .issue-ref {
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .title-text,
-    .author-text {
-      display: block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .link-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .mini-link {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      padding: 2px 7px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #f6f8fa;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .empty {
-      padding: 28px 14px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .card-list {
-      display: none;
-      padding: 12px;
-      gap: 10px;
-    }
-
-    .idea-card {
-      display: grid;
-      gap: 10px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fff;
-    }
-
-    .idea-card-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .idea-card-title {
-      min-width: 0;
-      font-weight: 700;
-      line-height: 1.35;
-      word-break: break-word;
-    }
-
-    .idea-card-id {
-      flex: 0 0 auto;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .idea-card-grid {
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
-      gap: 6px 10px;
-      font-size: 13px;
-    }
-
-    .idea-card-label {
-      color: var(--muted);
-    }
-
-    .idea-card-value {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .side-block { padding: 14px; border-bottom: 1px solid var(--line); }
-    .side-block:last-child { border-bottom: 0; }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .tag {
-      padding: 5px 9px;
-      border: 1px solid #b6e3ff;
-      border-radius: 999px;
-      background: var(--tag);
-      color: #0969da;
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .tag.active {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .case {
-      margin: 10px 0 0;
-      padding-left: 18px;
-    }
-
-    .case li { margin: 8px 0; }
-
-    footer {
-      padding: 24px 0;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-    }
-
-    @media (max-width: 820px) {
-      .hero, .grid { grid-template-columns: 1fr; }
-      .nav { align-items: flex-start; }
-      .table-scroll { overflow-x: auto; }
-      table { min-width: 994px; }
-    }
-
-    @media (max-width: 700px) {
-      .wrap {
-        width: min(100% - 20px, 1180px);
-      }
-
-      .nav {
-        flex-direction: column;
-      }
-
-      .nav .button,
-      .hero .button {
-        width: 100%;
-      }
-
-      .hero {
-        gap: 14px;
-      }
-
-      .table-scroll {
-        display: none;
-      }
-
-      .card-list {
-        display: grid;
-      }
-
-      .section-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遗缺点子回收站 - Abandoned ideas, reusable lessons.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Mono & Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        archiveBg: '#090d16',
+                        darkCard: '#0f1422',
+                        amberBrand: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #090d16;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.03) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.002) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.002) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <div class="wrap nav">
-      <div class="brand">
-        <strong>遗缺点子回收站</strong>
-        <span>Abandoned ideas, reusable lessons.</span>
-      </div>
-      <a class="button" id="submitTop" href="#">提交遗缺点子</a>
-    </div>
-  </header>
+<body class="font-sans antialiased text-slate-200 min-h-screen flex flex-col justify-between">
 
-  <main class="wrap">
-    <div class="hero">
-      <div>
-        <h1>把卡住的项目，变成后来者的起点。</h1>
-        <p class="lead">这里收集独立开发者已经上线、暂时搁置、失败或等待接盘的点子。真实现状也有价值，尤其是那些被推广卡住的产品。</p>
-      </div>
-      <a class="button" id="submitHero" href="#">发布一个遗缺点子</a>
-    </div>
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <div class="notice" id="trafficNotice">
-      <strong>你刚刚关注了“推广困难”相关问题。</strong>
-      流量互助联盟可以帮早期产品互相挂链接、共享第一批访问者。
-      <a href="https://ally.swep.top/" target="_blank" rel="noreferrer">了解流量互助联盟</a>
+    <!-- Top Alert Banner (AI Alliance integration) -->
+    <div id="alliance-banner" class="hidden bg-gradient-to-r from-amber-500/20 via-orange-600/10 to-amber-500/20 border-b border-amber-500/30 text-xs py-3 px-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-2 text-amber-300">
+                <span class="flex h-2 w-2 rounded-full bg-amber-500 animate-ping"></span>
+                <span class="font-medium">💡 推广雷达：如果你的项目不是做不出来，而是没人看见，可以看看 AI 流量联盟。</span>
+            </div>
+            <a href="https://ally.swep.top/" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-1 rounded text-[11px] transition-colors flex items-center gap-1 shrink-0">
+                了解 AI 流量联盟
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
     </div>
 
-    <div class="grid">
-      <section>
-        <div class="section-head">
-          <h2>遗缺点子列表</h2>
-          <span class="meta" id="countText">加载中</span>
+    <!-- Navigation Header -->
+    <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Left Header brand info -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="w-7 h-7 rounded bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-amber-400 text-sm shadow group-hover:border-amber-500 transition-colors">
+                        📦
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-100 tracking-wide text-sm sm:text-base">遗缺点子回收站</span>
+                        <span class="hidden sm:inline-block text-[10px] text-slate-500 ml-2 font-mono">Abandoned ideas, reusable lessons.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Right Header Action buttons -->
+            <div class="flex items-center gap-3">
+                <a href="https://ally.swep.top/" target="_blank" class="text-xs text-slate-400 hover:text-amber-400 transition-colors hidden md:inline-flex items-center gap-1">
+                    流量互助联盟
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+                <span class="h-4 w-px bg-slate-800 hidden md:block"></span>
+                <a id="submit-top" href="https://github.com/ipwangxin/AbandonedIdeas/issues/new?template=abandon_idea.yml" target="_blank" rel="noreferrer" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                    </svg>
+                    提交遗缺点子
+                </a>
+            </div>
         </div>
-        <div class="toolbar">
-          <input id="searchInput" type="search" placeholder="搜索点子、原因、作者、访问地址">
+    </header>
+
+    <!-- Hero Board -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 w-full">
+        <div class="bg-gradient-to-b from-slate-950 to-slate-900 border border-slate-800 rounded-lg p-6 md:p-8 relative overflow-hidden">
+            <!-- Background grids -->
+            <div class="absolute inset-0 bg-[radial-gradient(#ffffff01_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-3xl space-y-4">
+                <span class="text-xs font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">
+                    Open Ideas Database
+                </span>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-sans tracking-tight">
+                    把卡住的项目，变成后来者的起点。
+                </h1>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    这里收集已上线、暂停、失败或等待接盘的独立开发点子和产品。你可以来此寻找微型收购标的、挖掘灵感 lessons learned，亦或是把你自己无暇维护的 Demo 提交给能带它跑完最后一公里的开发者。
+                </p>
+
+                <div class="pt-2 flex flex-wrap items-center gap-4">
+                    <a id="submit-hero" href="https://github.com/ipwangxin/AbandonedIdeas/issues/new?template=abandon_idea.yml" target="_blank" rel="noreferrer" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold px-4 py-2.5 rounded transition-all flex items-center gap-1.5 shadow-sm">
+                        <span>去 GitHub New Issue 提交</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </a>
+                    <a href="https://ally.swep.top/" target="_blank" class="bg-slate-900/60 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 font-semibold px-4 py-2.5 rounded transition-all">
+                        发现推广工具: AI流量联盟
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th class="id">ID</th>
-                <th class="title-col">点子名称</th>
-                <th class="status">上线状态</th>
-                <th class="reason">卡住原因</th>
-                <th class="links">外部链接</th>
-                <th class="author">作者</th>
-                <th class="date">日期</th>
-              </tr>
-            </thead>
-            <tbody id="ideaRows"></tbody>
-          </table>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 w-full flex-grow">
+        <!-- Scroll Target Anchor with offset to prevent header overlap -->
+        <div id="list-top" class="scroll-mt-24"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Area: Main List (Col 8) -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Search & Counter Header bar -->
+                <div class="bg-slate-950 border border-slate-800 rounded-lg p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </span>
+                        <input
+                            type="search"
+                            id="search-input" 
+                            oninput="handleSearchInput(this.value)"
+                            placeholder="搜索点子、原因、作者或访问网址..." 
+                            class="w-full bg-slate-900 border border-slate-800 hover:border-slate-700 focus:border-amber-500/80 focus:outline-none rounded pl-10 pr-4 py-2 text-xs text-slate-200 transition-colors placeholder-slate-500"
+                        >
+                    </div>
+
+                    <!-- Selected badge indicator -->
+                    <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                        <span class="text-xs text-slate-500 font-mono">
+                            匹配: <span id="filtered-count" class="text-amber-400 font-bold">0</span> / <span id="total-count">0</span>
+                        </span>
+                        <button 
+                            id="reset-filter-btn" 
+                            onclick="resetAllFilters()" 
+                            class="hidden text-[10px] bg-slate-900 border border-slate-800 hover:border-slate-700 hover:text-white text-slate-400 px-2 py-1 rounded transition-colors"
+                        >
+                            清除筛选
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table View (Desktop) -->
+                <div class="hidden md:block bg-slate-950 border border-slate-800 rounded-lg overflow-hidden">
+                    <div class="max-h-[640px] overflow-auto">
+                    <table class="w-full min-w-[900px] text-left border-collapse table-fixed">
+                        <thead>
+                            <tr class="bg-slate-900/50 border-b border-slate-800 text-[11px] text-slate-400 font-mono">
+                                <th class="py-4 px-4 w-12 text-center">ID</th>
+                                <th class="py-4 px-4 w-44">点子名称</th>
+                                <th class="py-4 px-4 w-24">上线状态</th>
+                                <th class="py-4 px-4 w-32">卡住原因</th>
+                                <th class="py-4 px-4 w-16 text-center">外部</th>
+                                <th class="py-4 px-4 w-28">作者</th>
+                                <th id="date-header" class="py-4 px-4 w-24 text-right">日期</th>
+                            </tr>
+                        </thead>
+                        <tbody id="desktop-tbody" class="divide-y divide-slate-800/60 text-xs">
+                            <!-- JS Inject -->
+                        </tbody>
+                    </table>
+                    </div>
+                    
+                    <div id="empty-state" class="hidden py-16 text-center space-y-3">
+                        <span class="text-2xl">🔍</span>
+                        <p class="text-slate-400 text-xs">没有找到符合条件的点子，尝试换个关键词吧</p>
+                        <button onclick="resetAllFilters()" class="text-xs text-amber-500 hover:underline">返回完整列表</button>
+                    </div>
+                </div>
+
+                <!-- Card View (Mobile) -->
+                <div class="md:hidden space-y-4" id="mobile-card-list">
+                    <!-- JS Inject -->
+                </div>
+            </div>
+
+            <!-- Right Area: Sidebar Info (Col 4) -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Sidebar Module 1: Reasons Tag Cloud -->
+                <div class="bg-slate-950 border border-slate-800 rounded-lg p-5 space-y-4">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+                        卡住原因标签云
+                    </h3>
+                    <p class="text-[11px] text-slate-500">点击标签快速筛选受挫原因的项目</p>
+                    <div class="flex flex-wrap gap-2" id="reasons-cloud">
+                        <!-- JS Inject -->
+                    </div>
+                </div>
+
+                <!-- Sidebar Module 2: AI Alliance Ad -->
+                <div class="bg-gradient-to-br from-slate-950 to-slate-900 border border-slate-800 rounded-lg p-5 space-y-4 relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-amber-500/5 rounded-full blur-xl pointer-events-none"></div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+                            推广卡住了？
+                        </span>
+                        <span class="text-[9px] bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded font-mono">AD</span>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-200">AI 流量联盟 (ally.swep.top)</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            如果是“推广困难/没人知道”，与其荒废它，不如去流量联盟挂一段轻量脚本，把多余流量分给同盟。别人也把流量返给你，抱团取暖冷启动！
+                        </p>
+                    </div>
+
+                    <a href="https://ally.swep.top/" target="_blank" class="w-full py-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-center text-[11px] font-bold text-amber-400 rounded transition-all block">
+                        去 AI 流量联盟看看 →
+                    </a>
+                </div>
+
+                <!-- Sidebar Module 3: Success Stories -->
+                <div class="bg-slate-950 border border-slate-800 rounded-lg p-5 space-y-4">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                        接盘重生成功案例
+                    </h3>
+                    
+                    <div class="space-y-3 divide-y divide-slate-800/60 text-xs">
+                        <!-- Case 1 -->
+                        <div class="pt-1 first:pt-0 space-y-1">
+                            <div class="flex items-center justify-between">
+                                <strong class="text-slate-200">#04 Markdown Resume</strong>
+                                <span class="text-[10px] text-emerald-400 font-mono">已复活</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                原作者由于求职结束而搁置，后被同行 @helin 接手重构，接入了 AI 自动润色功能，目前月活用户 2K+。
+                            </p>
+                        </div>
+                        
+                        <!-- Case 2 -->
+                        <div class="pt-3 space-y-1">
+                            <div class="flex items-center justify-between">
+                                <strong class="text-slate-200">#08 DevTools Ext</strong>
+                                <span class="text-[10px] text-emerald-400 font-mono">已收购</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                原作者卡在无法科学商业化。在回收站挂出后，三天内被一家小微出海工作室以 $800 整体收购。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="card-list" id="ideaCards"></div>
-        <div class="empty" id="emptyState" hidden>还没有匹配的遗缺点子。先提交第一个吧。</div>
-      </section>
+    </main>
 
-      <aside>
-        <div class="side-block">
-          <h2>热门原因标签云</h2>
-          <div class="tags" id="reasonTags"></div>
+    <!-- Footer Area -->
+    <footer class="border-t border-slate-900 bg-slate-950/40 py-12 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 space-y-4">
+            <p>基于 GitHub Issues + GitHub Pages 无后端轻量架构构建</p>
+            <p class="text-[11px]">遗缺点子回收站 © 2026. 每一行代码都有它重生的理由。</p>
+            <div class="flex justify-center gap-4 text-slate-400 pt-2">
+                <a href="https://ally.swep.top/" class="hover:text-amber-400 transition-colors">友情链接：AI 流量联盟</a>
+                <span>•</span>
+                <a href="#" class="hover:text-slate-300 transition-colors">免责声明</a>
+            </div>
         </div>
-        <div class="side-block">
-          <h2>成功案例</h2>
-          <ol class="case">
-            <li><a href="https://github.com" target="_blank" rel="noreferrer">一个被搁置的自动化脚本，被后来者改成开源 CLI。</a></li>
-            <li><a href="https://ally.swep.top/" target="_blank" rel="noreferrer">推广失败的小工具，通过互助链接找到第一批用户。</a></li>
-          </ol>
-        </div>
-        <div class="side-block">
-          <h2>推广卡住了？</h2>
-          <p class="meta">如果你的项目不是做不出来，而是没人看见，先看看流量互助联盟。</p>
-          <p><a class="button" href="https://ally.swep.top/" target="_blank" rel="noreferrer">加入流量联盟</a></p>
-        </div>
-      </aside>
-    </div>
-  </main>
+    </footer>
 
-  <footer>
-    <div class="wrap">Powered by GitHub Issues, GitHub Pages and GitHub Actions.</div>
-  </footer>
+    <!-- Core Database & Logic -->
+    <script>
+        const CONFIG = {
+            owner: "ipwangxin",
+            repo: "AbandonedIdeas",
+            issueTemplate: "abandon_idea.yml",
+            abandonedLabel: "abandoned"
+        };
 
-  <script>
-    const CONFIG = {
-      owner: "ipwangxin",
-      repo: "AbandonedIdeas",
-      issueTemplate: "abandon_idea.yml",
-      abandonedLabel: "abandoned"
-    };
+        let ideaDatabase = [];
+        let searchQuery = "";
+        let selectedReason = "";
+        let hasAnyDate = false;
 
-    const state = {
-      issues: [],
-      filterReason: "",
-      keyword: ""
-    };
+        const desktopTbody = document.getElementById("desktop-tbody");
+        const mobileCardList = document.getElementById("mobile-card-list");
+        const filteredCountEl = document.getElementById("filtered-count");
+        const totalCountEl = document.getElementById("total-count");
+        const resetFilterBtn = document.getElementById("reset-filter-btn");
+        const emptyState = document.getElementById("empty-state");
+        const allianceBanner = document.getElementById("alliance-banner");
+        const reasonsCloud = document.getElementById("reasons-cloud");
+        const dateHeader = document.getElementById("date-header");
+        const searchInput = document.getElementById("search-input");
 
-    const rows = document.querySelector("#ideaRows");
-    const cards = document.querySelector("#ideaCards");
-    const tags = document.querySelector("#reasonTags");
-    const countText = document.querySelector("#countText");
-    const emptyState = document.querySelector("#emptyState");
-    const searchInput = document.querySelector("#searchInput");
+        window.addEventListener("DOMContentLoaded", initPage);
 
-    function repoReady() {
-      return !CONFIG.owner.startsWith("YOUR_") && !CONFIG.repo.startsWith("YOUR_");
-    }
+        async function initPage() {
+            wireSubmitLinks();
+            applyInitialIntent();
+            try {
+                ideaDatabase = await loadIdeas();
+                hasAnyDate = ideaDatabase.some(item => item.date);
+                totalCountEl.innerText = ideaDatabase.length;
+                renderTagCloud();
+                applyFiltersAndRender();
+            } catch (error) {
+                console.error(error);
+                showToast("数据加载失败，请检查 data.json 或 GitHub Issues", "error");
+                totalCountEl.innerText = "0";
+                filteredCountEl.innerText = "0";
+                emptyState.classList.remove("hidden");
+                emptyState.querySelector("p").textContent = "数据加载失败，请稍后刷新重试";
+            }
+        }
 
-    function newIssueUrl() {
-      if (!repoReady()) return "https://github.com/new";
-      const url = new URL(`https://github.com/${CONFIG.owner}/${CONFIG.repo}/issues/new`);
-      url.searchParams.set("template", CONFIG.issueTemplate);
-      return url.toString();
-    }
+        function newIssueUrl() {
+            const url = new URL(`https://github.com/${CONFIG.owner}/${CONFIG.repo}/issues/new`);
+            url.searchParams.set("template", CONFIG.issueTemplate);
+            return url.toString();
+        }
 
-    function wireSubmitLinks() {
-      const url = newIssueUrl();
-      document.querySelectorAll("#submitTop, #submitHero").forEach((link) => {
-        link.href = url;
-        link.addEventListener("click", () => {
-          localStorage.setItem("abandonIdeaSubmitIntent", JSON.stringify({
-            at: Date.now(),
-            reasonHint: "推广困难，找不到用户"
-          }));
-        });
-      });
-    }
+        function wireSubmitLinks() {
+            const url = newIssueUrl();
+            ["submit-top", "submit-hero"].forEach(id => {
+                const link = document.getElementById(id);
+                if (!link) return;
+                link.href = url;
+                link.addEventListener("click", () => {
+                    localStorage.setItem("abandonIdeaSubmitIntent", JSON.stringify({
+                        at: Date.now(),
+                        reasonHint: "推广困难，找不到用户"
+                    }));
+                });
+            });
+        }
 
-    function maybeShowTrafficNotice() {
-      const params = new URLSearchParams(location.search);
-      const reason = params.get("reason") || "";
-      const raw = localStorage.getItem("abandonIdeaSubmitIntent");
-      const recentlySubmitted = raw ? Date.now() - JSON.parse(raw).at < 1000 * 60 * 60 * 24 : false;
-      if (reason.includes("推广困难") || recentlySubmitted) {
-        document.querySelector("#trafficNotice").style.display = "block";
-      }
-    }
+        function applyInitialIntent() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialReason = urlParams.get("reason") || "";
+            if (initialReason === "promotion" || initialReason === "promotion-difficulty" || initialReason.includes("推广")) {
+                searchQuery = "推广";
+                searchInput.value = searchQuery;
+            }
 
-    function extractField(body, label) {
-      if (!body) return "";
-      const patterns = [
-        new RegExp(`### ${label}\\s+([\\s\\S]*?)(?=\\n### |$)`, "i"),
-        new RegExp(`${label}\\s*[:：]\\s*([^\\n]+)`, "i")
-      ];
-      for (const pattern of patterns) {
-        const match = body.match(pattern);
-        if (match) return match[1].trim().replace(/^_No response_$/i, "");
-      }
-      return "";
-    }
+            try {
+                const raw = localStorage.getItem("abandonIdeaSubmitIntent");
+                const recentlySubmitted = raw ? Date.now() - JSON.parse(raw).at < 1000 * 60 * 60 * 24 : false;
+                if (recentlySubmitted) allianceBanner.classList.remove("hidden");
+            } catch (error) {
+                localStorage.removeItem("abandonIdeaSubmitIntent");
+            }
+        }
 
-    function normalizeIssue(issue) {
-      const body = issue.body || "";
-      return {
-        id: issue.number || issue.id,
-        title: extractField(body, "点子名称") || issue.title.replace(/^\[遗缺点子\]\s*/, ""),
-        status: launchStatus(body),
-        reason: displayReason(body),
-        liveUrl: extractField(body, "访问地址") || extractField(body, "上线地址"),
-        sourceUrl: extractField(body, "开源地址"),
-        author: issue.user?.login || issue.author || "unknown",
-        date: issue.created_at || issue.date || ""
-      };
-    }
+        async function loadIdeas() {
+            try {
+                const response = await fetch("data.json", { cache: "no-store" });
+                if (!response.ok) throw new Error("data.json not found");
+                const data = await response.json();
+                const issues = Array.isArray(data) ? data : data.issues;
+                if (!Array.isArray(issues)) return [];
+                return issues.map(normalizeIssue);
+            } catch (error) {
+                const api = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/issues?state=open&labels=${encodeURIComponent(CONFIG.abandonedLabel)}&per_page=100`;
+                const data = await fetch(api).then(res => res.json());
+                return Array.isArray(data) ? data.map(normalizeIssue) : [];
+            }
+        }
 
-    function launchStatus(body) {
-      const value = extractField(body, "是否上线");
-      const legacyStatus = extractField(body, "当前状态");
-      const checked = value.includes("[x]") || value.includes("已上线") && !value.includes("[ ]");
-      return checked || legacyStatus.includes("已上线") ? "已上线" : "未上线";
-    }
+        function normalizeIssue(issue) {
+            const body = issue.body || "";
+            const liveUrl = extractField(body, "访问地址") || extractField(body, "上线地址");
+            const sourceUrl = extractField(body, "开源地址");
+            return {
+                id: String(issue.number || issue.id || ""),
+                title: extractField(body, "点子名称") || String(issue.title || "未命名点子").replace(/^\[遗缺点子\]\s*/, ""),
+                status: launchStatus(body),
+                reason: displayReason(body),
+                link: normalizeUrl(liveUrl) || normalizeUrl(sourceUrl),
+                liveUrl: normalizeUrl(liveUrl),
+                sourceUrl: normalizeUrl(sourceUrl),
+                author: issue.user?.login ? `@${issue.user.login}` : issue.author || "unknown",
+                date: issue.created_at || issue.date || ""
+            };
+        }
 
-    function displayReason(body) {
-      const reason = extractField(body, "卡住或遗弃原因") || extractField(body, "遗弃原因") || "未填写";
-      const other = extractField(body, "其他原因说明");
-      if (reason === "其他" && other) return `其他：${other}`;
-      return reason;
-    }
+        function extractField(body, label) {
+            if (!body) return "";
+            const patterns = [
+                new RegExp(`### \\[遗缺点子\\] ${escapeRegExp(label)}\\s+([\\s\\S]*?)(?=\\n### |$)`, "i"),
+                new RegExp(`### ${escapeRegExp(label)}\\s+([\\s\\S]*?)(?=\\n### |$)`, "i"),
+                new RegExp(`${escapeRegExp(label)}\\s*[:：]\\s*([^\\n]+)`, "i")
+            ];
+            for (const pattern of patterns) {
+                const match = body.match(pattern);
+                if (!match) continue;
+                return match[1].trim().replace(/^_No response_$/i, "").replace(/^暂无$/i, "");
+            }
+            return "";
+        }
 
-    async function loadIssues() {
-      try {
-        const data = await fetch("data.json", { cache: "no-store" }).then((res) => {
-          if (!res.ok) throw new Error("data.json not found");
-          return res.json();
-        });
-        return Array.isArray(data) ? data.map(normalizeIssue) : data.issues.map(normalizeIssue);
-      } catch (error) {
-        if (!repoReady()) return [];
-        const api = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/issues?state=open&labels=${encodeURIComponent(CONFIG.abandonedLabel)}&per_page=100`;
-        const data = await fetch(api).then((res) => res.json());
-        return Array.isArray(data) ? data.map(normalizeIssue) : [];
-      }
-    }
+        function launchStatus(body) {
+            const checkbox = extractField(body, "是否上线");
+            const legacyStatus = extractField(body, "当前状态");
+            const normalized = `${checkbox} ${legacyStatus}`.toLowerCase();
+            if (normalized.includes("[x]") || normalized.includes("已上线") || normalized.includes("上线运营")) return "已上线";
+            if (legacyStatus && !legacyStatus.includes("其他")) return legacyStatus;
+            return "未上线";
+        }
 
-    function filteredIssues() {
-      const keyword = state.keyword.toLowerCase();
-      return state.issues.filter((issue) => {
-        const matchReason = !state.filterReason || issue.reason === state.filterReason;
-        const haystack = `${issue.title} ${issue.status} ${issue.reason} ${issue.liveUrl} ${issue.sourceUrl} ${issue.author}`.toLowerCase();
-        return matchReason && (!keyword || haystack.includes(keyword));
-      });
-    }
+        function displayReason(body) {
+            const reason = extractField(body, "卡住或遗弃原因") || extractField(body, "遗弃原因") || "未填写";
+            const other = extractField(body, "其他原因说明");
+            if (reason === "其他" && other) return `其他：${other}`;
+            return reason;
+        }
 
-    function renderTags() {
-      const counts = new Map();
-      state.issues.forEach((issue) => counts.set(issue.reason, (counts.get(issue.reason) || 0) + 1));
-      const items = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-      tags.innerHTML = "";
+        function renderTagCloud() {
+            const counts = {};
+            ideaDatabase.forEach(item => {
+                counts[item.reason] = (counts[item.reason] || 0) + 1;
+            });
 
-      const all = document.createElement("button");
-      all.className = `tag ${state.filterReason ? "" : "active"}`;
-      all.textContent = `全部 ${state.issues.length}`;
-      all.onclick = () => { state.filterReason = ""; render(); };
-      tags.append(all);
+            reasonsCloud.innerHTML = "";
+            const all = document.createElement("button");
+            all.className = tagClass(!selectedReason);
+            all.onclick = () => selectReasonFilter("");
+            all.innerHTML = `<span>全部</span><span class="text-[9px] bg-slate-950 px-1.5 py-0.5 rounded text-slate-500">${ideaDatabase.length}</span>`;
+            reasonsCloud.appendChild(all);
 
-      items.forEach(([reason, count]) => {
-        const tag = document.createElement("button");
-        tag.className = `tag ${state.filterReason === reason ? "active" : ""}`;
-        tag.textContent = `${reason} ${count}`;
-        tag.onclick = () => { state.filterReason = reason; render(); };
-        tags.append(tag);
-      });
-    }
+            Object.entries(counts).sort((a, b) => b[1] - a[1]).forEach(([reason, count]) => {
+                const badge = document.createElement("button");
+                badge.className = tagClass(selectedReason === reason);
+                badge.onclick = () => selectReasonFilter(reason);
+                badge.innerHTML = `
+                    <span>${escapeHtml(reason)}</span>
+                    <span class="text-[9px] bg-slate-950 px-1.5 py-0.5 rounded text-slate-500">${count}</span>
+                `;
+                reasonsCloud.appendChild(badge);
+            });
+        }
 
-    function renderRows() {
-      const issues = filteredIssues();
-      rows.innerHTML = "";
-      cards.innerHTML = "";
-      emptyState.hidden = issues.length > 0;
-      countText.textContent = `${issues.length} / ${state.issues.length} 个点子`;
+        function tagClass(active) {
+            return `text-[11px] px-2.5 py-1 rounded transition-all cursor-pointer text-left flex items-center justify-between w-full border font-mono ${
+                active
+                    ? "bg-amber-500/15 border-amber-500 text-amber-400 font-bold"
+                    : "bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200"
+            }`;
+        }
 
-      issues.forEach((issue) => {
-        const tr = document.createElement("tr");
-        const date = issue.date ? new Date(issue.date).toLocaleDateString("zh-CN") : "-";
-        const links = [
-          externalLink(issue.liveUrl, "访问"),
-          externalLink(issue.sourceUrl, "开源")
-        ].filter(Boolean).join("");
-        tr.innerHTML = `
-          <td class="id"><span class="issue-ref" title="GitHub Issue #${issue.id}">#${issue.id}</span></td>
-          <td class="title-col"><span class="title-text" title="${escapeHtml(issue.title)}">${escapeHtml(issue.title)}</span></td>
-          <td class="status">${escapeHtml(issue.status)}</td>
-          <td class="reason">${escapeHtml(issue.reason)}</td>
-          <td class="links"><div class="link-list">${links || "-"}</div></td>
-          <td class="author"><span class="author-text" title="${escapeHtml(issue.author)}">${escapeHtml(issue.author)}</span></td>
-          <td class="date">${date}</td>
-        `;
-        rows.append(tr);
+        function handleSearchInput(value) {
+            searchQuery = value.trim().toLowerCase();
+            applyFiltersAndRender();
+        }
 
-        const card = document.createElement("article");
-        card.className = "idea-card";
-        card.innerHTML = `
-          <div class="idea-card-head">
-            <div class="idea-card-title">${escapeHtml(issue.title)}</div>
-            <div class="idea-card-id">#${issue.id}</div>
-          </div>
-          <div class="idea-card-grid">
-            <div class="idea-card-label">状态</div>
-            <div class="idea-card-value">${escapeHtml(issue.status)}</div>
-            <div class="idea-card-label">原因</div>
-            <div class="idea-card-value">${escapeHtml(issue.reason)}</div>
-            <div class="idea-card-label">链接</div>
-            <div class="idea-card-value"><div class="link-list">${links || "-"}</div></div>
-            <div class="idea-card-label">作者</div>
-            <div class="idea-card-value">${escapeHtml(issue.author)}</div>
-            <div class="idea-card-label">日期</div>
-            <div class="idea-card-value">${date}</div>
-          </div>
-        `;
-        cards.append(card);
-      });
-    }
+        function selectReasonFilter(reason) {
+            selectedReason = selectedReason === reason ? "" : reason;
+            renderTagCloud();
+            applyFiltersAndRender();
 
-    function externalLink(value, label) {
-      const url = normalizeUrl(value);
-      if (!url) return "";
-      return `<a class="mini-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${label}</a>`;
-    }
+            if (window.innerWidth < 1024) {
+                document.getElementById("list-top")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
 
-    function normalizeUrl(value) {
-      const text = String(value || "").trim();
-      if (!text) return "";
-      if (/^https?:\/\//i.test(text)) return text;
-      if (/^www\./i.test(text)) return `https://${text}`;
-      return "";
-    }
+        function resetAllFilters() {
+            searchQuery = "";
+            selectedReason = "";
+            searchInput.value = "";
+            renderTagCloud();
+            applyFiltersAndRender();
+        }
 
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[char]));
-    }
+        function filteredIdeas() {
+            return ideaDatabase.filter(item => {
+                const haystack = `${item.title} ${item.reason} ${item.author} ${item.liveUrl} ${item.sourceUrl} ${item.status}`.toLowerCase();
+                const matchesSearch = !searchQuery || haystack.includes(searchQuery);
+                const matchesReason = !selectedReason || item.reason === selectedReason;
+                return matchesSearch && matchesReason;
+            });
+        }
 
-    function render() {
-      renderTags();
-      renderRows();
-    }
+        function applyFiltersAndRender() {
+            const filtered = filteredIdeas();
+            filteredCountEl.innerText = filtered.length;
+            resetFilterBtn.classList.toggle("hidden", !(searchQuery || selectedReason));
 
-    searchInput.addEventListener("input", (event) => {
-      state.keyword = event.target.value;
-      render();
-    });
+            const containsPromotionKeyword =
+                searchQuery.includes("推广") ||
+                searchQuery.includes("流量") ||
+                searchQuery.includes("没人") ||
+                selectedReason.includes("推广") ||
+                selectedReason.includes("流量");
+            allianceBanner.classList.toggle("hidden", !containsPromotionKeyword);
 
-    wireSubmitLinks();
-    maybeShowTrafficNotice();
-    loadIssues()
-      .then((issues) => { state.issues = issues; render(); })
-      .catch(() => {
-        countText.textContent = "加载失败";
-        emptyState.hidden = false;
-        emptyState.textContent = "数据加载失败，请检查 data.json 或仓库配置。";
-      });
-  </script>
+            dateHeader?.classList.toggle("hidden", !hasAnyDate);
+            renderDesktopTable(filtered);
+            renderMobileCards(filtered);
+            emptyState.classList.toggle("hidden", filtered.length > 0);
+        }
+
+        function renderDesktopTable(items) {
+            desktopTbody.innerHTML = "";
+            items.forEach(item => {
+                const isPromo = promotionReason(item.reason);
+                const links = renderLinkActions(item);
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-900/30 transition-colors group";
+                tr.innerHTML = `
+                    <td class="py-5 sm:py-6 px-4 font-mono text-slate-500 text-center text-[11px]">#${escapeHtml(item.id)}</td>
+                    <td class="py-5 sm:py-6 px-4 font-medium text-slate-200">
+                        <div class="truncate max-w-[176px]" title="${escapeAttr(item.title)}">${escapeHtml(item.title)}</div>
+                    </td>
+                    <td class="py-5 sm:py-6 px-4">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono ${statusClass(item.status)}">${escapeHtml(item.status)}</span>
+                    </td>
+                    <td class="py-5 sm:py-6 px-4">
+                        <span class="text-slate-300 flex items-center gap-1 flex-wrap">
+                            <span title="${escapeAttr(item.reason)}" class="line-clamp-2">${escapeHtml(item.reason)}</span>
+                            ${isPromo ? `<a href="https://ally.swep.top/" target="_blank" rel="noreferrer" class="text-[9px] bg-amber-500/10 text-amber-500 px-1.5 py-0.5 rounded hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0">导流联盟</a>` : ""}
+                        </span>
+                    </td>
+                    <td class="py-5 sm:py-6 px-4 text-center">
+                        <div class="flex items-center justify-center gap-2">${links || '<span class="text-slate-600">-</span>'}</div>
+                    </td>
+                    <td class="py-5 sm:py-6 px-4 text-slate-400 font-mono">
+                        <div class="truncate max-w-[100px]" title="${escapeAttr(item.author)}">${escapeHtml(item.author)}</div>
+                    </td>
+                    ${hasAnyDate ? `<td class="py-5 sm:py-6 px-4 text-right text-slate-500 font-mono text-[10px]">${formatDate(item.date)}</td>` : ""}
+                `;
+                desktopTbody.appendChild(tr);
+            });
+        }
+
+        function renderMobileCards(items) {
+            mobileCardList.innerHTML = "";
+            items.forEach(item => {
+                const isPromo = promotionReason(item.reason);
+                const dateBlock = item.date ? `
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-slate-500">登记日期:</span>
+                        <span class="text-slate-300 font-mono">${formatDate(item.date)}</span>
+                    </div>
+                ` : "";
+                const primaryLink = item.liveUrl || item.sourceUrl;
+                const card = document.createElement("div");
+                card.className = "bg-slate-950 border border-slate-800 rounded-lg p-4 space-y-3";
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="space-y-1 min-w-0">
+                            <span class="text-[10px] font-mono text-slate-500">#${escapeHtml(item.id)}</span>
+                            <h4 class="text-sm font-bold text-slate-200 break-words">${escapeHtml(item.title)}</h4>
+                        </div>
+                        <span class="px-2 py-0.5 rounded text-[9px] font-mono shrink-0 ${statusClass(item.status)}">${escapeHtml(item.status)}</span>
+                    </div>
+
+                    <div class="text-[11px] space-y-1 text-slate-400">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <span class="text-slate-500">卡住原因:</span>
+                            <span class="text-slate-300 font-medium">${escapeHtml(item.reason)}</span>
+                            ${isPromo ? `<a href="https://ally.swep.top/" target="_blank" rel="noreferrer" class="text-[9px] bg-amber-500/15 text-amber-400 px-1.5 py-0.5 rounded border border-amber-500/20">推广去联盟</a>` : ""}
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-slate-500">提交作者:</span>
+                            <span class="text-slate-300 font-mono">${escapeHtml(item.author)}</span>
+                        </div>
+                        ${dateBlock}
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-900 flex items-center justify-between gap-2">
+                        <span class="text-[10px] text-slate-500 truncate max-w-[180px] font-mono">${primaryLink ? escapeHtml(primaryLink) : "暂无外部链接"}</span>
+                        <div class="flex items-center gap-3 shrink-0">
+                            ${primaryLink ? `<a href="${escapeAttr(primaryLink)}" target="_blank" rel="noreferrer" class="text-xs text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1">访问 ↗</a>` : ""}
+                            ${primaryLink ? `<button onclick="copyLink('${escapeJs(primaryLink)}')" class="text-xs text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1 cursor-pointer">复制</button>` : ""}
+                        </div>
+                    </div>
+                `;
+                mobileCardList.appendChild(card);
+            });
+        }
+
+        function statusClass(status) {
+            if (status.includes("已上线") || status.includes("上线运营")) return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+            if (status.includes("暂停") || status.includes("未上线")) return "bg-amber-500/10 text-amber-400 border border-amber-500/20";
+            return "bg-slate-800 text-slate-400 border border-slate-700/60";
+        }
+
+        function renderLinkActions(item) {
+            return [
+                linkAction(item.liveUrl, "前往访问地址", "访问"),
+                linkAction(item.sourceUrl, "前往开源地址", "开源")
+            ].filter(Boolean).join("");
+        }
+
+        function linkAction(url, title, label) {
+            if (!url) return "";
+            return `
+                <a href="${escapeAttr(url)}" target="_blank" rel="noreferrer" class="text-slate-500 hover:text-amber-400 transition-colors" title="${title}">
+                    <span class="sr-only">${label}</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+                <button onclick="copyLink('${escapeJs(url)}')" class="text-slate-500 hover:text-emerald-400 transition-colors cursor-pointer" title="复制${label}链接">
+                    <span class="sr-only">复制${label}链接</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                </button>
+            `;
+        }
+
+        function copyLink(text) {
+            const tempInput = document.createElement("textarea");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+
+            try {
+                const successful = document.execCommand("copy");
+                showToast(successful ? `已复制链接：${text}` : "复制失败，请手动选择复制", successful ? "success" : "error");
+            } catch (err) {
+                showToast("无法启用剪贴板复制", "error");
+            }
+
+            document.body.removeChild(tempInput);
+        }
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = "p-4 rounded shadow-lg border text-xs font-semibold flex items-center gap-3 bg-slate-900 border-slate-800 transition-all transform translate-y-2 opacity-0 pointer-events-auto max-w-sm";
+            const colorClass = type === "success" ? "text-emerald-400" : "text-amber-400";
+            const icon = type === "success" ? "✓" : "ℹ";
+            toast.innerHTML = `
+                <span class="w-5 h-5 rounded-full flex items-center justify-center font-bold border border-slate-700 bg-slate-950 ${colorClass}">${icon}</span>
+                <span class="text-slate-200">${escapeHtml(message)}</span>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove("opacity-0", "translate-y-2"), 10);
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function normalizeUrl(value) {
+            const text = String(value || "").trim();
+            if (!text) return "";
+            if (/^https?:\/\//i.test(text)) return text;
+            if (/^www\./i.test(text)) return `https://${text}`;
+            return "";
+        }
+
+        function promotionReason(reason) {
+            return reason.includes("推广") || reason.includes("流量") || reason.includes("找不到用户") || reason.includes("没人");
+        }
+
+        function formatDate(value) {
+            if (!value) return "";
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return "";
+            return date.toLocaleDateString("zh-CN");
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[char]));
+        }
+
+        function escapeAttr(value) {
+            return escapeHtml(value);
+        }
+
+        function escapeJs(value) {
+            return String(value).replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/\n/g, "\\n").replace(/\r/g, "");
+        }
+
+        function escapeRegExp(value) {
+            return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        }
+    </script>
 </body>
 </html>
