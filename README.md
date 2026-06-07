@@ -1,128 +1,126 @@
-# 遗缺点子回收站
+# Abandoned Ideas
 
-这里是一个收集“被放弃、被暂停、增长卡住，或者等待接盘的软件点子”的地方。
+[English](README.md) | [中文](README.zh-CN.md)
 
-现在做东西的门槛越来越低了。尤其是 vibe coding 之后，一个灵光乍现的晚上，你可能只是想和 AI 随便聊聊，结果越聊越嗨，需求文档有了，页面有了，接口也有了。凌晨两点，你突然觉得自己像是被选中的人：这个点子一定能成。
+This is a place for collecting software ideas that were abandoned, paused, stuck after launch, or waiting for someone else to take over.
 
-但第二天、第二周、第二个月，真实世界又会慢慢回来：没人访问、不知道怎么推广、技术债变重、兴趣转移、竞品出现、工作太忙，或者只是那股兴奋劲过去了。
+Building has become easier than ever. With vibe coding, a random late-night idea can quickly turn into a product conversation with AI. The more you talk, the more real it feels: requirements appear, pages take shape, APIs get wired, and at 2 AM you start feeling like this might be the one.
 
-这很正常。
+Then the real world returns. Nobody visits. Promotion is harder than expected. Technical debt grows. Interest shifts. A competitor appears. Work gets busy. Or the excitement simply fades.
 
-每个开发者手里可能都有一些没继续做下去的项目：已经上线但没增长的产品、做了一半的工具、没找到用户的应用、验证失败的想法、暂时搁置的开源计划。它们不一定没有价值，只是暂时没有遇到合适的时间、场景、用户或接手的人。
+That is normal.
 
-**遗缺点子回收站** 希望把这些想法公开沉淀下来，让大家可以相互借鉴、相互启发，也让后来者有机会从别人的半成品、上线产品、失败经验和真实卡点里找到新的灵感。
+Every developer has projects that did not continue: launched products with no growth, half-built tools, apps that never found users, failed experiments, paused open-source plans, or side projects that quietly disappeared. They are not always worthless. Sometimes they simply missed the right timing, audience, context, or next maintainer.
 
-## 这个项目适合谁
+**Abandoned Ideas** aims to preserve those ideas publicly, so developers can learn from each other, find inspiration, and discover new opportunities from launched products, unfinished work, failed attempts, and real-world blockers.
 
-- 有项目上线了，但没找到用户或增长停滞的人
-- 有项目做了一半，但暂时不想继续维护的人
-- 想复盘一次失败尝试，并把经验留给后来者的人
-- 正在寻找新产品、新开源项目或副业灵感的人
-- 想接盘别人遗留想法，并做出新版本的人
-- 关心独立开发、冷启动、推广和产品验证的人
+## Who This Is For
 
-## 你可以在这里看到什么
+- Makers who launched something but could not find users or growth
+- Makers who have paused or abandoned a project
+- Developers who want to document a failed attempt for others to learn from
+- Indie hackers looking for new product or open-source ideas
+- Builders who may want to take over an abandoned idea
+- People interested in product validation, user acquisition, and early-stage launches
 
-- 被遗弃的产品点子
-- 已上线但增长困难的产品
-- 每个点子的核心描述
-- 作者当前遇到的主要卡点
-- 已经完成过的工作
-- 技术栈、访问地址、开源地址或接盘建议
-- 其他开发者遇到的真实问题
+## What You Can Find Here
 
-这些内容不一定都是“成功经验”，但真实现状本身就很有价值。它可以帮助后来者少走弯路，也可能让某个被放弃、被暂停或增长卡住的想法，在另一个人手里重新活过来。
+- Abandoned product ideas
+- Launched products that are stuck with growth or promotion
+- Short descriptions of what each idea was about
+- The main blocker the author is facing
+- Work that had already been done
+- Tech stacks, visit URLs, open-source URLs, and handoff notes
+- Real problems other developers encountered
 
-## 在线浏览
+Not everything here is a success story. That is the point. The current state of a project is useful raw material. It can help others avoid repeated mistakes, rethink a market, or revive an idea in a new form.
 
-网站首页：[点击访问](https://ideas.swep.top/)
+## Browse Online
+
+Website: [Open website](https://ideas.swep.top/)
 
 ```text
 https://ideas.swep.top/
 ```
 
-流量互助联盟页面：[点击访问](https://ally.swep.top/)
+Traffic Alliance: [Open page](https://ally.swep.top/)
 
 ```text
 https://ally.swep.top/
 ```
 
-如果你的项目不是做不出来，而是卡在“推广困难，找不到用户”，可以看看流量互助联盟。它的目标是让早期产品通过互挂链接、共享曝光，找到第一批真实用户。
+If your product was not blocked by development but by “promotion is hard, cannot find users,” the Traffic Alliance may help. It is a lightweight mutual-support network where early-stage products exchange links and share exposure to reach their first real users.
 
-## 可以提交什么
+## What You Can Submit
 
-你不一定要等到“彻底放弃”才提交。以下都可以：
+You do not need to wait until a project is completely abandoned. These are all welcome:
 
-- 已上线，但没有用户或增长困难
-- 已上线，但暂时停止维护
-- 未上线，只有原型、Demo 或截图
-- 未上线，只有想法、需求文档或聊天记录整理
-- 已开源，但缺少贡献者、维护者或接盘者
-- 已经放弃，但认为过程和经验值得留下
+- Launched, but no users or growth
+- Launched, but no longer maintained
+- Not launched, but there is a prototype, demo, or screenshot
+- Not launched, but there are notes, requirements, or AI chat summaries
+- Open-source, but lacking contributors, maintainers, or a new owner
+- Fully abandoned, but the process and lessons are worth sharing
 
-## 如何提交一个新点子
+## How to Submit a New Idea
 
-1. 打开本仓库的 [Issues 页面](https://github.com/ipwangxin/AbandonedIdeas/issues)。
+1. Open the repository [Issues page](https://github.com/ipwangxin/AbandonedIdeas/issues).
 
    ```text
    https://github.com/ipwangxin/AbandonedIdeas/issues
    ```
 
-2. 点击 [New issue](https://github.com/ipwangxin/AbandonedIdeas/issues/new/choose)。
+2. Click [New issue](https://github.com/ipwangxin/AbandonedIdeas/issues/new/choose).
 
    ```text
    https://github.com/ipwangxin/AbandonedIdeas/issues/new/choose
    ```
 
-3. 选择 **提交遗缺点子** 表单。
-4. 按提示填写：
-   - 点子名称
-   - 一句话描述
-   - 访问地址，可选
-   - 是否上线，默认未上线
-   - 开源地址，可选
-   - 卡住或遗弃原因
-   - 其他原因说明，可选
-   - 技术栈
-   - 已做工作
-   - 接盘建议
-5. 提交后，这个 Issue 会自动带上 `abandoned` 标签。
-6. 网站会通过 GitHub Actions 同步数据，并展示到首页列表中。
+3. Choose the **提交遗缺点子** form.
+4. Fill in:
+   - Idea name
+   - One-line description
+   - Visit URL, optional
+   - Launch status, unchecked means not launched
+   - Open-source URL, optional
+   - Blocker or reason for abandonment
+   - Other reason details, optional
+   - Tech stack
+   - Work already done
+   - Handoff notes
+5. After submission, the Issue will be labeled `abandoned`.
+6. GitHub Actions will sync the data and display it on the homepage.
 
-## 提交建议
+## Submission Tips
 
-为了让别人更容易理解和接盘，建议你写得具体一点：
+To make your idea easier to understand or take over:
 
-- 不只写“没时间”，也写清楚已经做到了哪一步
-- 不只写“推广失败”，也写试过哪些渠道
-- 如果已经上线，请附上产品、Demo、落地页或文档访问地址
-- 如果已经开源，请附上 GitHub、GitLab、Gitee 等代码仓库地址
-- 如果你愿意别人接着做，请写清楚授权和接盘边界
-- 如果这个点子已经不适合继续做，也可以写下原因，帮助别人避坑
+- Do not only write “no time”; explain what had already been done
+- Do not only write “failed promotion”; mention which channels you tried
+- If the project is live, add the product, demo, landing page, or documentation visit URL
+- If the project is open-source, add the GitHub, GitLab, Gitee, or other repository URL
+- If you welcome others to continue the work, clarify permission and handoff boundaries
+- If the idea should not be continued, explain why so others can avoid the same trap
 
-## 项目机制
+## How It Works
 
-这个项目尽量保持简单，主要依赖 GitHub 免费能力：
+This project intentionally keeps the infrastructure simple and mostly free:
 
-- GitHub Issues：收集点子
-- GitHub Issue Template：结构化提交表单
-- GitHub Pages：展示网站
-- GitHub Actions：同步 Issue 数据到 `docs/data.json`
+- GitHub Issues for collecting ideas
+- GitHub Issue Template for structured submissions
+- GitHub Pages for the website
+- GitHub Actions for syncing Issue data into `docs/data.json`
 
-没有独立后端，也没有外部数据库。先让内容流动起来，再根据真实使用情况逐步扩展。
+There is no backend server and no external database. The goal is to let the content flow first, then expand only when real usage demands it.
 
-## 维护说明
+## Maintainer Notes
 
-如果你是仓库维护者：
+If you maintain this repository:
 
-- 首页代码在 `docs/index.html`
-- 流量互助联盟已迁移到 `https://ally.swep.top/`，`docs/lianmeng.html` 仅保留跳转
-- Issue 表单在 `.github/ISSUE_TEMPLATE/abandon_idea.yml`
-- 数据同步工作流在 `.github/workflows/sync-issues.yml`
-- 静态数据文件在 `docs/data.json`
+- Homepage: `docs/index.html`
+- Traffic Alliance has moved to `https://ally.swep.top/`; `docs/lianmeng.html` only keeps a redirect
+- Issue form: `.github/ISSUE_TEMPLATE/abandon_idea.yml`
+- Sync workflow: `.github/workflows/sync-issues.yml`
+- Static data file: `docs/data.json`
 
-手动运营时，建议优先关注前 10 个提交者：补标签、追问关键信息、整理成功案例，并邀请因推广困难而放弃的开发者了解流量互助联盟。
-
-## English
-
-English documentation is available in [README.en.md](README.en.md).
+For the first 10 submissions, manual operation is recommended: add useful labels, ask follow-up questions, collect success stories, and invite developers who stopped because of promotion problems to check out the Traffic Alliance.
