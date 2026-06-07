@@ -183,16 +183,16 @@
                 <!-- Table View (Desktop) -->
                 <div class="hidden md:block bg-slate-950 border border-slate-800 rounded-lg overflow-hidden">
                     <div class="max-h-[640px] overflow-auto">
-                    <table class="w-full min-w-[900px] text-left border-collapse table-fixed">
+                    <table class="w-full text-left border-collapse table-fixed">
                         <thead>
                             <tr class="bg-slate-900/50 border-b border-slate-800 text-[11px] text-slate-400 font-mono">
-                                <th class="py-4 px-4 w-12 text-center">ID</th>
-                                <th class="py-4 px-4 w-44">点子名称</th>
-                                <th class="py-4 px-4 w-24">上线状态</th>
-                                <th class="py-4 px-4 w-32">卡住原因</th>
-                                <th class="py-4 px-4 w-16 text-center">外部</th>
-                                <th class="py-4 px-4 w-28">作者</th>
-                                <th id="date-header" class="py-4 px-4 w-24 text-right">日期</th>
+                                <th class="py-4 px-3 w-12 text-center">ID</th>
+                                <th class="py-4 px-3 w-36">点子名称</th>
+                                <th class="py-4 px-3 w-20">上线状态</th>
+                                <th class="py-4 px-3 w-32">卡住原因</th>
+                                <th class="py-4 px-3 w-14 text-center">外部</th>
+                                <th class="py-4 px-3 w-24">作者</th>
+                                <th id="date-header" class="py-4 px-3 w-20 text-right">日期</th>
                             </tr>
                         </thead>
                         <tbody id="desktop-tbody" class="divide-y divide-slate-800/60 text-xs">
@@ -252,37 +252,7 @@
                     </a>
                 </div>
 
-                <!-- Sidebar Module 3: Success Stories -->
-                <div class="bg-slate-950 border border-slate-800 rounded-lg p-5 space-y-4">
-                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                        接盘重生成功案例
-                    </h3>
-                    
-                    <div class="space-y-3 divide-y divide-slate-800/60 text-xs">
-                        <!-- Case 1 -->
-                        <div class="pt-1 first:pt-0 space-y-1">
-                            <div class="flex items-center justify-between">
-                                <strong class="text-slate-200">#04 Markdown Resume</strong>
-                                <span class="text-[10px] text-emerald-400 font-mono">已复活</span>
-                            </div>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">
-                                原作者由于求职结束而搁置，后被同行 @helin 接手重构，接入了 AI 自动润色功能，目前月活用户 2K+。
-                            </p>
-                        </div>
-                        
-                        <!-- Case 2 -->
-                        <div class="pt-3 space-y-1">
-                            <div class="flex items-center justify-between">
-                                <strong class="text-slate-200">#08 DevTools Ext</strong>
-                                <span class="text-[10px] text-emerald-400 font-mono">已收购</span>
-                            </div>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">
-                                原作者卡在无法科学商业化。在回收站挂出后，三天内被一家小微出海工作室以 $800 整体收购。
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Sidebar Module 3: Success Stories is intentionally hidden for now. Keep this placeholder for future real cases. -->
             </div>
 
         </div>
@@ -540,26 +510,26 @@
                 const tr = document.createElement("tr");
                 tr.className = "hover:bg-slate-900/30 transition-colors group";
                 tr.innerHTML = `
-                    <td class="py-5 sm:py-6 px-4 font-mono text-slate-500 text-center text-[11px]">#${escapeHtml(item.id)}</td>
-                    <td class="py-5 sm:py-6 px-4 font-medium text-slate-200">
-                        <div class="truncate max-w-[176px]" title="${escapeAttr(item.title)}">${escapeHtml(item.title)}</div>
+                    <td class="py-5 sm:py-6 px-3 font-mono text-slate-500 text-center text-[11px]">#${escapeHtml(item.id)}</td>
+                    <td class="py-5 sm:py-6 px-3 font-medium text-slate-200">
+                        <div class="truncate max-w-[120px]" title="${escapeAttr(item.title)}">${escapeHtml(item.title)}</div>
                     </td>
-                    <td class="py-5 sm:py-6 px-4">
+                    <td class="py-5 sm:py-6 px-3">
                         <span class="px-2 py-0.5 rounded text-[10px] font-mono ${statusClass(item.status)}">${escapeHtml(item.status)}</span>
                     </td>
-                    <td class="py-5 sm:py-6 px-4">
+                    <td class="py-5 sm:py-6 px-3">
                         <span class="text-slate-300 flex items-center gap-1 flex-wrap">
                             <span title="${escapeAttr(item.reason)}" class="line-clamp-2">${escapeHtml(item.reason)}</span>
                             ${isPromo ? `<a href="https://ally.swep.top/" target="_blank" rel="noreferrer" class="text-[9px] bg-amber-500/10 text-amber-500 px-1.5 py-0.5 rounded hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0">导流联盟</a>` : ""}
                         </span>
                     </td>
-                    <td class="py-5 sm:py-6 px-4 text-center">
+                    <td class="py-5 sm:py-6 px-3 text-center">
                         <div class="flex items-center justify-center gap-2">${links || '<span class="text-slate-600">-</span>'}</div>
                     </td>
-                    <td class="py-5 sm:py-6 px-4 text-slate-400 font-mono">
-                        <div class="truncate max-w-[100px]" title="${escapeAttr(item.author)}">${escapeHtml(item.author)}</div>
+                    <td class="py-5 sm:py-6 px-3 text-slate-400 font-mono">
+                        <div class="truncate max-w-[84px]" title="${escapeAttr(item.author)}">${escapeHtml(item.author)}</div>
                     </td>
-                    ${hasAnyDate ? `<td class="py-5 sm:py-6 px-4 text-right text-slate-500 font-mono text-[10px]">${formatDate(item.date)}</td>` : ""}
+                    ${hasAnyDate ? `<td class="py-5 sm:py-6 px-3 text-right text-slate-500 font-mono text-[10px]">${formatDate(item.date)}</td>` : ""}
                 `;
                 desktopTbody.appendChild(tr);
             });
