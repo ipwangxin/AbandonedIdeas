@@ -2,8 +2,6 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-Branch and release rules: [CONTRIBUTING.md](CONTRIBUTING.md)
-
 This is a place for collecting software ideas that were abandoned, paused, stuck after launch, or waiting for someone else to take over.
 
 Building has become easier than ever. With vibe coding, a random late-night idea can quickly turn into a product conversation with AI. The more you talk, the more real it feels: requirements appear, pages take shape, APIs get wired, and at 2 AM you start feeling like this might be the one.
