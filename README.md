@@ -41,10 +41,10 @@
 https://ideas.swep.top/
 ```
 
-流量互助联盟页面：[点击访问](https://ideas.swep.top/lianmeng.html)
+流量互助联盟页面：[点击访问](https://ally.swep.top/)
 
 ```text
-https://ideas.swep.top/lianmeng.html
+https://ally.swep.top/
 ```
 
 如果你的项目不是做不出来，而是卡在“推广困难，找不到用户”，可以看看流量互助联盟。它的目标是让早期产品通过互挂链接、共享曝光，找到第一批真实用户。
@@ -116,7 +116,7 @@ https://ideas.swep.top/lianmeng.html
 如果你是仓库维护者：
 
 - 首页代码在 `docs/index.html`
-- 联盟介绍页在 `docs/lianmeng.html`
+- 流量互助联盟已迁移到 `https://ally.swep.top/`，`docs/lianmeng.html` 仅保留跳转
 - Issue 表单在 `.github/ISSUE_TEMPLATE/abandon_idea.yml`
 - 数据同步工作流在 `.github/workflows/sync-issues.yml`
 - 静态数据文件在 `docs/data.json`

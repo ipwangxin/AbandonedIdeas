@@ -41,10 +41,10 @@ Website: [Open website](https://ideas.swep.top/)
 https://ideas.swep.top/
 ```
 
-Traffic Alliance: [Open page](https://ideas.swep.top/lianmeng.html)
+Traffic Alliance: [Open page](https://ally.swep.top/)
 
 ```text
-https://ideas.swep.top/lianmeng.html
+https://ally.swep.top/
 ```
 
 If your product was not blocked by development but by “promotion is hard, cannot find users,” the Traffic Alliance may help. It is a lightweight mutual-support network where early-stage products exchange links and share exposure to reach their first real users.
@@ -116,7 +116,7 @@ There is no backend server and no external database. The goal is to let the cont
 If you maintain this repository:
 
 - Homepage: `docs/index.html`
-- Traffic Alliance page: `docs/lianmeng.html`
+- Traffic Alliance has moved to `https://ally.swep.top/`; `docs/lianmeng.html` only keeps a redirect
 - Issue form: `.github/ISSUE_TEMPLATE/abandon_idea.yml`
 - Sync workflow: `.github/workflows/sync-issues.yml`
 - Static data file: `docs/data.json`
