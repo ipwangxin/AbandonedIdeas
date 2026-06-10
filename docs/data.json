@@ -1,7 +1,23 @@
 {
-  "generated_at": "2026-06-09T23:10:25.584Z",
-  "count": 2,
+  "generated_at": "2026-06-10T01:44:52.171Z",
+  "count": 3,
   "issues": [
+    {
+      "id": 4627135688,
+      "number": 3,
+      "title": "[遗缺点子] 反菜谱省钱做饭",
+      "body": "### 点子名称\n\n反菜谱省钱做饭\n\n### 一句话描述\n\n做一个网页工具，让用户输入家里已有食材、预算、人数和饮食限制，反向生成一周菜单和购物清单，优先复用食材、减少浪费和每天想吃什么的决策压力。\n\n\n### 访问地址\n\n_No response_\n\n### 是否上线\n\n- [ ] 已上线\n\n### 开源地址\n\n_No response_\n\n### 卡住或遗弃原因\n\n时间不够，优先级下降\n\n### 其他原因说明\n\n_No response_\n\n### 技术栈\n\n_No response_\n\n### 已做工作\n\n前端可以使用 React / Vue / Next.js 实现食材输入、菜单生成、购物清单、替换菜品和结果保存。\n\n### 接盘建议\n\n_No response_",
+      "html_url": "https://github.com/ipwangxin/AbandonedIdeas/issues/3",
+      "created_at": "2026-06-10T01:44:43Z",
+      "updated_at": "2026-06-10T01:44:43Z",
+      "user": {
+        "login": "ipwangxin",
+        "html_url": "https://github.com/ipwangxin"
+      },
+      "labels": [
+        "abandoned"
+      ]
+    },
     {
       "id": 4622512453,
       "number": 2,
